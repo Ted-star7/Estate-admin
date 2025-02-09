@@ -1,7 +1,149 @@
-root {
-  --primary-color: #F25C05;
-  --secondary-color: #D98D62;
-  --accent-color: #F24607;
-  --background-color: #F2EED8;
-  --light-color: #F2F2F2;
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #F2EED8;
+  /* Light beige from your logo */
+  color: #595959;
+  /* Dark gray for text */
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0px;
+  /* Adjusted to 90px from the left */
+  top: 0;
+  transition: width 0.3s ease;
+}
+
+/* Logo Styling */
+.logo-container {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #F2F2F2;
+  /* Light gray from your logo */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* Navigation */
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  margin-bottom: 0.75rem;
+}
+
+nav ul li a,
+nav ul li button {
+  display: flex;
+  align-items: center;
+  color: #595959;
+  /* Dark gray for text */
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background-color: transparent;
+}
+
+nav ul li a:hover,
+nav ul li button:hover {
+  background-color: #D98D62;
+  /* Light orange from your logo */
+  color: #F2F2F2;
+  /* Light gray for text */
+  transform: translateX(5px);
+}
+
+nav ul li a i,
+nav ul li button i {
+  margin-right: 0.75rem;
+  font-size: 1.1rem;
+}
+
+/* Dropdown */
+.dropdown button {
+  width: 100%;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #595959;
+  /* Dark gray for text */
+}
+
+.dropdown-icon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  display: none;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu li {
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-menu li a {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background-color: #F2F2F2;
+  /* Light gray from your logo */
+  display: block;
+  transition: all 0.3s ease;
+  color: #595959;
+  /* Dark gray for text */
+}
+
+.dropdown-menu li a:hover {
+  background-color: #D98D62;
+  /* Light orange from your logo */
+  color: #F2F2F2;
+  /* Light gray for text */
+  transform: translateX(5px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
