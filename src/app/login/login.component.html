@@ -1,1 +1,58 @@
-<p>login works!</p>
+<div class="container">
+  <!-- Image Section (Left) -->
+  <div class="image-section">
+    <div class="logo">
+      <img
+        src="/assets/logo.jpg"
+        alt="Logo"
+      />
+      <p>Building Dreams</p>
+    </div>
+    <div class="image-text">
+      <p>Crown Estates</p>
+      <p>
+       Welcome to Crown Estates.
+      </p>
+    </div>
+    <!-- <div class="image-navigation">
+      <button><i class="fas fa-arrow-left"></i></button>
+      <button><i class="fas fa-arrow-right"></i></button>
+    </div> -->
+  </div>
+
+  <!-- Login Form Section (Right) -->
+  <div class="form-section">
+    <h2>Sign In</h2>
+    <p>Please login to continue to your account.</p>
+    <form>
+      <div class="input-icon">
+        <i class="fas fa-envelope"></i>
+        <input type="email" placeholder="Email" required />
+      </div>
+      <div class="input-icon">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Username" required />
+      </div>
+      <div class="input-icon">
+        <i class="fas fa-user-tag"></i>
+        <select required>
+          <option value="">Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="superadmin">Superadmin</option>
+        </select>
+      </div>
+      <div class="input-icon">
+        <i class="fas fa-lock"></i>
+        <input type="password" placeholder="Password" required />
+      </div>
+      <div class="remember-forgot">
+        <!-- <label> <input type="checkbox" /> Remember me </label> -->
+        <a href="/resetpassword">Forgot password?</a>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <!-- <div class="signup-link">
+      <p>Need an account? <a href="#">Click Here</a></p>
+    </div> -->
+  </div>
+</div>

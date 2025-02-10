@@ -2,19 +2,34 @@
 .sidebar {
   width: 250px;
   height: 100vh;
-  background-color: #F2EED8;
-  /* Light beige from your logo */
-  color: #595959;
-  /* Dark gray for text */
+  background-color: #F25C05;
+  color: #F2F2F2;
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   position: fixed;
-  left: 0px;
-  /* Adjusted to 90px from the left */
+  left: 0;
   top: 0;
-  transition: width 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* Mobile Toggle */
+.menu-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  background: none;
+  border: none;
+  color: #F25C05;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1000;
+  display: none;
 }
 
 /* Logo Styling */
@@ -23,15 +38,13 @@
   margin-bottom: 2rem;
   padding: 1rem;
   background-color: #F2F2F2;
-  /* Light gray from your logo */
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logo {
   width: 100%;
-  max-width: 150px;
-  height: auto;
+  max-width: 180px;
   border-radius: 10px;
   transition: transform 0.3s ease;
 }
@@ -54,8 +67,7 @@ nav ul li a,
 nav ul li button {
   display: flex;
   align-items: center;
-  color: #595959;
-  /* Dark gray for text */
+  color: #F2F2F2;
   text-decoration: none;
   padding: 0.75rem 1rem;
   border-radius: 8px;
@@ -66,9 +78,7 @@ nav ul li button {
 nav ul li a:hover,
 nav ul li button:hover {
   background-color: #D98D62;
-  /* Light orange from your logo */
   color: #F2F2F2;
-  /* Light gray for text */
   transform: translateX(5px);
 }
 
@@ -88,8 +98,7 @@ nav ul li button i {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #595959;
-  /* Dark gray for text */
+  color: #F2F2F2;
 }
 
 .dropdown-icon {
@@ -105,45 +114,48 @@ nav ul li button i {
   display: none;
   padding-left: 1.5rem;
   margin-top: 0.5rem;
-  animation: fadeIn 0.3s ease;
 }
 
 .dropdown-menu.show {
   display: block;
 }
 
-.dropdown-menu li {
-  margin-bottom: 0.5rem;
+/* Logout */
+.logout-container {
+  margin-top: auto;
+  margin-top:-25px;
+  text-align: center;
+  padding: 1rem;
 }
 
-.dropdown-menu li a {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  background-color: #F2F2F2;
-  /* Light gray from your logo */
-  display: block;
-  transition: all 0.3s ease;
-  color: #595959;
-  /* Dark gray for text */
-}
-
-.dropdown-menu li a:hover {
-  background-color: #D98D62;
-  /* Light orange from your logo */
+.logout-button {
+  background: #F24607;
   color: #F2F2F2;
-  /* Light gray for text */
-  transform: translateX(5px);
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s ease;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+.logout-button:hover {
+  background: #D98D62;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 220px;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .menu-toggle {
+    display: block;
   }
 }

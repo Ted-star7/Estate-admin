@@ -1,8 +1,13 @@
-<div class="container">
+<div class="container" [class.sidebar-open]="isSidebarOpen">
+  <!-- Hamburger Menu Button for Mobile -->
+  <button class="hamburger" (click)="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+
   <!-- Sidebar -->
-  <!-- <div *ngIf="!hideSidebar">
-    <app-sidebar></app-sidebar>
-  </div> -->
+  <div *ngIf="!hideSidebar">
+    <app-sidebar [isSidebarOpen]="isSidebarOpen" (toggleSidebar)="toggleSidebar()"></app-sidebar>
+  </div>
 
   <!-- Main Content -->
   <div class="outlet">

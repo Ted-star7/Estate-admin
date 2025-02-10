@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminComponent } from './admin/admin.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { ContactComponent } from './contact/contact.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'sidebar', component: SidebarComponent},
   { path: 'admin', component: AdminComponent},
   { path: 'testimonials', component: TestimonialsComponent},
+  { path: 'contact', component: ContactComponent},
   { path: '**', redirectTo: '' }, // Fallback
 ];
