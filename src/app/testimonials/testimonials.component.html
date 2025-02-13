@@ -1,1 +1,53 @@
-<p>testimonials works!</p>
+<div class="testimonial-container">
+  <h1>Client Testimonials</h1>
+
+  <!-- Testimonial Form -->
+  <form [formGroup]="testimonialForm" (ngSubmit)="submitTestimonial()" class="testimonial-form">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" formControlName="name" required />
+    </div>
+
+    <div class="form-group">
+      <label>Rating:</label>
+      <div class="rating">
+        <input type="radio" id="star5" formControlName="rating" value="5" />
+        <label for="star5" class="star">&#9733;</label>
+        <input type="radio" id="star4" formControlName="rating" value="4" />
+        <label for="star4" class="star">&#9733;</label>
+        <input type="radio" id="star3" formControlName="rating" value="3" />
+        <label for="star3" class="star">&#9733;</label>
+        <input type="radio" id="star2" formControlName="rating" value="2" />
+        <label for="star2" class="star">&#9733;</label>
+        <input type="radio" id="star1" formControlName="rating" value="1" />
+        <label for="star1" class="star">&#9733;</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="testimonial">Testimonial:</label>
+      <textarea id="testimonial" formControlName="testimonial" rows="4" required></textarea>
+    </div>
+
+    <button type="submit" [disabled]="loading || testimonialForm.invalid">
+      {{ loading ? 'Submitting...' : 'Submit Testimonial' }}
+    </button>
+  </form>
+
+  <!-- Testimonial List -->
+  <div class="testimonial-list">
+    <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+      <div class="testimonial-content">
+        <p class="testimonial-text">{{ testimonial.testimonial }}</p>
+        <p class="testimonial-author">- {{ testimonial.name }}</p>
+        <div class="testimonial-rating">
+          Rating: {{ testimonial.rating }} / 5
+        </div>
+      </div>
+      <div class="testimonial-actions">
+        <button class="edit-button" (click)="onEdit(testimonial)">Edit</button>
+        <button class="delete-button" (click)="onDelete(testimonial)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,7 +13,8 @@ body {
 .container {
   display: flex;
   max-width: 1200px;
-  width: 90%;
+  margin-left: -80px;
+  width: 100%;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -26,12 +27,13 @@ body {
   position: relative;
   background: url('/assets/login.jpg') no-repeat center center/cover;
   min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
 }
 
 .logo {
-  position: absolute;
-  top: 20px;
-  left: 20px;
   display: flex;
   align-items: center;
 }
@@ -48,13 +50,10 @@ body {
 }
 
 .image-text {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.85);
   padding: 15px;
   border-radius: 8px;
-  max-width: 300px;
+  max-width: 280px;
 }
 
 .image-text p {
@@ -66,27 +65,6 @@ body {
 .image-text p:first-child {
   font-weight: bold;
   margin-bottom: 5px;
-}
-
-.image-navigation {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-.image-navigation button {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.image-navigation button:hover {
-  background-color: rgba(255, 255, 255, 1);
 }
 
 /* Login Form Section (Right) */
@@ -117,73 +95,67 @@ body {
   gap: 15px;
 }
 
-.form-section label {
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
+.input-icon {
+  position: relative;
 }
 
-.form-section input,
-.form-section select {
+.input-icon i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 16px;
+}
+
+.input-icon input,
+.input-icon select {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
+  padding: 12px 40px 12px 36px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 14px;
   outline: none;
 }
 
-.form-section input:focus,
-.form-section select:focus {
+.input-icon input:focus,
+.input-icon select:focus {
   border-color: #f97316;
   box-shadow: 0 0 5px rgba(249, 115, 22, 0.5);
 }
 
-.form-section .input-icon {
-  position: relative;
-}
-
-.form-section .input-icon i {
+/* Password Visibility Toggle */
+.eye-icon {
   position: absolute;
-  left: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
   color: #666;
+  font-size: 16px;
 }
 
-.form-section .input-icon input,
-.form-section .input-icon select {
-  padding-left: 35px;
-}
-
-.form-section .remember-forgot {
+/* Remember & Forgot Password */
+.remember-forgot {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
-.form-section .remember-forgot label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
-  color: #333;
-}
-
-.form-section .remember-forgot a {
+.remember-forgot a {
   font-size: 14px;
   color: #f97316;
   text-decoration: none;
 }
 
-.form-section .remember-forgot a:hover {
+.remember-forgot a:hover {
   text-decoration: underline;
 }
 
-.form-section button {
+/* Login Button */
+button {
   background-color: #f97316;
   color: #fff;
   padding: 12px;
@@ -195,31 +167,20 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.form-section button:hover {
+button:hover {
   background-color: #e65a00;
 }
 
-.form-section .signup-link {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #666;
-}
-
-.form-section .signup-link a {
-  color: #f97316;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.form-section .signup-link a:hover {
-  text-decoration: underline;
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
+    margin-left: 0px;
   }
 
   .image-section {

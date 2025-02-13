@@ -12,7 +12,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(), // Enable HTTP client
     provideClientHydration(), // For server-side rendering if needed
-    provideRouter(routes), provideAnimationsAsync(), // Register routing
+    provideRouter(routes), provideAnimationsAsync(), provideAnimationsAsync(), // Register routing
   ],
 })
   .catch((err) => console.error(err));

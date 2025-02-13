@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class ConsumeService {
 
-  private url: string = " https://inventory-1-xnav.onrender.com"
+  private url: string = "https://crown-estate.onrender.com"
 
   constructor(private httpClient: HttpClient) { }
 
