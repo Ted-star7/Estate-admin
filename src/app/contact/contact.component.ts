@@ -2,26 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ConsumeService } from '../services/consume.service'; // Assuming this is your service for API calls
-import { SessionService } from '../services/session.service'; // Assuming you store session data
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { ConsumeService } from '../services/consume.service';
+import { SessionService } from '../services/session.service';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule], // Ensure required modules are imported
+  imports: [NgFor, NgIf, CommonModule, ReactiveFormsModule, FormsModule], 
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.css'
+  styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
   messages: any[] = [];
   filteredMessages: any[] = [];
   selectedMessage: any = null;
+  selectedPastMessage: any = null; // For past messages
   replyForm: FormGroup;
   searchText: string = '';
   currentPage: number = 1;
-  pageSize: number = 5; // Number of messages per page
+  pageSize: number = 5;
+  showPastMessages: boolean = false; // Toggle between recent and past messages
 
   constructor(
     private http: HttpClient,
@@ -36,14 +38,18 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchMessages();
+    this.fetchRecentMessages();
   }
 
-  fetchMessages() {
-
+  fetchRecentMessages() {
+    this.showPastMessages = false;
     const token = this.sessionService.getToken();
-    const headers = { Authorization: `Bearer ${token}` };
-    this.consumeService.getRequest('/api/contact-us/admin-get-all-messages', null).subscribe(
+    if (!token) {
+      this.snackBar.open('Session expired. Please login again.', 'Close', { duration: 5000 });
+      return;
+    }
+
+    this.consumeService.getRequest('/api/contact-us/admin-get-all-messages', token).subscribe(
       (response: any) => {
         this.messages = response || [];
         this.filteredMessages = [...this.messages];
@@ -55,9 +61,39 @@ export class ContactComponent implements OnInit {
     );
   }
 
+  fetchPastMessages() {
+    this.showPastMessages = true;
+    const token = this.sessionService.getToken();
+    if (!token) {
+      this.snackBar.open('Session expired. Please login again.', 'Close', { duration: 5000 });
+      return;
+    }
+
+    this.consumeService.getRequest('/api/contact-us/history', token).subscribe(
+      (response: any) => {
+        this.messages = response || [];
+        this.filteredMessages = [...this.messages];
+      },
+      (error) => {
+        console.error('Error fetching past messages:', error);
+        this.snackBar.open('Failed to load past messages', 'Close', { duration: 3000 });
+      }
+    );
+  }
+
+  viewPastMessage(message: any) {
+    this.selectedPastMessage = message;
+  }
+
+  // Rest of your methods (searchMessages, selectMessage, sendReply, pagination, etc.)
+
+
   searchMessages() {
     this.filteredMessages = this.messages.filter(message =>
-      message.name.toLowerCase().includes(this.searchText.toLowerCase())
+      message.firstName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      message.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      message.email.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      message.phoneNumber.includes(this.searchText)
     );
   }
 
@@ -94,13 +130,13 @@ export class ContactComponent implements OnInit {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.filteredMessages.slice(startIndex, startIndex + this.pageSize);
   }
+
   get totalPages(): number {
     return Math.ceil(this.filteredMessages.length / this.pageSize);
   }
 
-
   nextPage() {
-    if (this.currentPage < Math.ceil(this.filteredMessages.length / this.pageSize)) {
+    if (this.currentPage < this.totalPages) {
       this.currentPage++;
     }
   }
@@ -111,3 +147,4 @@ export class ContactComponent implements OnInit {
     }
   }
 }
+

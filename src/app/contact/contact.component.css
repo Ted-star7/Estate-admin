@@ -1,0 +1,231 @@
+/* General Styles */
+.admin-panel {
+  font-family: Arial, sans-serif;
+  background-color: #F2F2F2;
+  padding: 20px;
+  max-width: 1400px;
+  /* Increased container width */
+  margin: 0 auto;
+}
+
+.admin-panel-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #595959;
+  margin-bottom: 20px;
+}
+
+.messages-container {
+  background-color: #F2EED8;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.messages-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #595959;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #D98D62;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #F25C05;
+  box-shadow: 0 0 0 2px rgba(242, 92, 5, 0.2);
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.tab-button {
+  padding: 8px 16px;
+  background-color: #F25C05;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.tab-button:hover {
+  background-color: #D98D62;
+}
+
+/* Table Styles */
+.messages-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+  table-layout: fixed;
+  /* Ensures consistent column widths */
+}
+
+.messages-table th,
+.messages-table td {
+  padding: 12px;
+  text-align: left;
+  word-wrap: break-word;
+  /* Ensures long text wraps within cells */
+}
+
+.messages-table th {
+  background-color: #D98D62;
+  color: white;
+}
+
+.messages-table tr {
+  border-bottom: 1px solid #F2EED8;
+}
+
+.messages-table tr:hover {
+  background-color: #F2F2F2;
+  cursor: pointer;
+}
+
+/* Column Widths */
+.messages-table th:nth-child(1),
+.messages-table td:nth-child(1) {
+  width: 5%;
+  /* # column */
+}
+
+.messages-table th:nth-child(2),
+.messages-table td:nth-child(2) {
+  width: 15%;
+  /* Name or Email column */
+}
+
+.messages-table th:nth-child(3),
+.messages-table td:nth-child(3) {
+  width: 20%;
+  /* Email or Client Message column */
+}
+
+.messages-table th:nth-child(4),
+.messages-table td:nth-child(4) {
+  width: 20%;
+  /* Phone or Admin Reply column */
+}
+
+.messages-table th:nth-child(5),
+.messages-table td:nth-child(5) {
+  width: 40%;
+  /* Message or Replied At column */
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.pagination-button {
+  padding: 8px 16px;
+  background-color: #F25C05;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #D98D62;
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: #595959;
+}
+
+/* Selected Message Styles */
+.selected-message {
+  background-color: #F2EED8;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.selected-message-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #595959;
+  margin-bottom: 16px;
+}
+
+.message-details p {
+  margin: 8px 0;
+  color: #595959;
+}
+
+.reply-form {
+  margin-top: 16px;
+}
+
+.reply-label {
+  display: block;
+  font-size: 14px;
+  color: #595959;
+  margin-bottom: 8px;
+}
+
+.reply-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #D98D62;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.reply-textarea:focus {
+  outline: none;
+  border-color: #F25C05;
+  box-shadow: 0 0 0 2px rgba(242, 92, 5, 0.2);
+}
+
+.reply-button {
+  padding: 8px 16px;
+  background-color: #F25C05;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 8px;
+  transition: background-color 0.3s;
+}
+
+.reply-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.reply-button:hover:not(:disabled) {
+  background-color: #D98D62;
+}

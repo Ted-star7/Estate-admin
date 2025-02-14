@@ -1,47 +1,97 @@
-<body class="font-sans bg-gray-100">
-  <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Admin Panel</h1>
+<div class="admin-panel">
+  <h1 class="admin-panel-title">Admin Panel</h1>
 
-    <div class="bg-white p-6 rounded shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Messages</h2>
+  <div class="messages-container">
+    <h2 class="messages-title">Messages</h2>
 
-      <!-- Search Input -->
-      <input type="text" [(ngModel)]="searchText" (input)="searchMessages()" 
-        class="border p-2 rounded w-full" placeholder="Search by name...">
+    <!-- Search Input -->
+    <input type="text" [(ngModel)]="searchText" (input)="searchMessages()"
+      class="search-input" placeholder="Search by name, email, or phone...">
 
-      <!-- Messages List -->
-      <div *ngFor="let message of paginatedMessages; let i = index" class="p-4 border border-gray-300 rounded-md mt-2 cursor-pointer"
-        (click)="selectMessage(message)">
-        <h3 class="text-lg font-semibold">#{{ (currentPage - 1) * pageSize + i + 1 }} - {{ message.name }}</h3>
-        <p><strong>Email:</strong> {{ message.email }}</p>
-        <p><strong>Message:</strong> {{ message.message | slice:0:50 }}...</p>
-      </div>
-
-      <!-- Pagination -->
-      <div class="mt-4 flex justify-between">
-        <button (click)="prevPage()" [disabled]="currentPage === 1" class="bg-gray-500 text-white py-2 px-4 rounded">Previous</button>
-        <span>Page {{ currentPage }} of {{ totalPages }}</span>
-
-        <button (click)="nextPage()" [disabled]="currentPage >= (filteredMessages.length / pageSize)" 
-          class="bg-gray-500 text-white py-2 px-4 rounded">Next</button>
-      </div>
+    <!-- Tabs for Recent and Past Messages -->
+    <div class="tabs">
+      <button (click)="fetchRecentMessages()" class="tab-button">Recent Messages</button>
+      <button (click)="fetchPastMessages()" class="tab-button">Past Messages</button>
     </div>
 
-    <!-- Selected Message & Reply Form -->
-    <div *ngIf="selectedMessage" class="bg-white p-6 rounded shadow-md mt-4">
-      <h2 class="text-xl font-semibold mb-4">View Message</h2>
-      <p><strong>Name:</strong> {{ selectedMessage.name }}</p>
-      <p><strong>Email:</strong> {{ selectedMessage.email }}</p>
-      <p><strong>Phone:</strong> {{ selectedMessage.phone }}</p>
-      <p><strong>Message:</strong> {{ selectedMessage.message }}</p>
+    <!-- Recent Messages Table -->
+    <table *ngIf="!showPastMessages" class="messages-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let message of paginatedMessages; let i = index" (click)="selectMessage(message)">
+          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+          <td>{{ message.firstName }} {{ message.lastName }}</td>
+          <td>{{ message.email }}</td>
+          <td>{{ message.phoneNumber }}</td>
+          <td>{{ message.message | slice:0:50 }}...</td>
+        </tr>
+      </tbody>
+    </table>
 
-      <!-- Reply Form -->
-      <form [formGroup]="replyForm" (ngSubmit)="sendReply()" class="mt-4">
-        <label class="block text-sm font-medium text-gray-700">Reply</label>
-        <textarea formControlName="replyMessage" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="4" required></textarea>
+    <!-- Past Messages Table -->
+    <table *ngIf="showPastMessages" class="messages-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Client Message</th>
+          <th>Admin Reply</th>
+          <th>Replied At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let message of paginatedMessages; let i = index" (click)="viewPastMessage(message)">
+          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+          <td>{{ message.clientEmail }}</td>
+          <td>{{ message.clientMessage | slice:0:50 }}...</td>
+          <td>{{ message.adminReply | slice:0:50 }}...</td>
+          <td>{{ message.repliedAt | date: 'medium' }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-        <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded mt-2" [disabled]="replyForm.invalid">Send Reply</button>
-      </form>
+    <!-- Pagination -->
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-button">Previous</button>
+      <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage >= totalPages" class="pagination-button">Next</button>
     </div>
   </div>
-</body>
+
+  <!-- Selected Recent Message & Reply Form -->
+  <div *ngIf="selectedMessage && !showPastMessages" class="selected-message">
+    <h2 class="selected-message-title">View Message</h2>
+    <div class="message-details">
+      <p><strong>Name:</strong> {{ selectedMessage.firstName }} {{ selectedMessage.lastName }}</p>
+      <p><strong>Email:</strong> {{ selectedMessage.email }}</p>
+      <p><strong>Phone:</strong> {{ selectedMessage.phoneNumber }}</p>
+      <p><strong>Message:</strong> {{ selectedMessage.message }}</p>
+    </div>
+
+    <!-- Reply Form -->
+    <form [formGroup]="replyForm" (ngSubmit)="sendReply()" class="reply-form">
+      <label class="reply-label">Reply</label>
+      <textarea formControlName="replyMessage" class="reply-textarea" rows="4" required></textarea>
+      <button type="submit" [disabled]="replyForm.invalid" class="reply-button">Send Reply</button>
+    </form>
+  </div>
+
+  <!-- Selected Past Message (No Reply Form) -->
+  <div *ngIf="selectedPastMessage && showPastMessages" class="selected-message">
+    <h2 class="selected-message-title">View Past Message</h2>
+    <div class="message-details">
+      <p><strong>Email:</strong> {{ selectedPastMessage.clientEmail }}</p>
+      <p><strong>Client Message:</strong> {{ selectedPastMessage.clientMessage }}</p>
+      <p><strong>Admin Reply:</strong> {{ selectedPastMessage.adminReply }}</p>
+      <p><strong>Replied At:</strong> {{ selectedPastMessage.repliedAt | date: 'medium' }}</p>
+    </div>
+  </div>
+</div>

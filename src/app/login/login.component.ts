@@ -17,10 +17,10 @@ import { NgIf } from '@angular/common';
 })
 export class LoginComponent {
   email: string | undefined;
-  username: string | undefined;
+  userName: string | undefined;
   password: string | undefined;
   role: string | undefined;
-  showPassword: boolean = false; // Toggles password visibility
+  showPassword: boolean = false; 
   isPasswordVisible: any;
   loading: boolean = false
 
@@ -42,43 +42,48 @@ export class LoginComponent {
     this.email = '';
     this.password = '';
     this.role = '';
-    this.username ='';
+    this.userName = '';
   }
   onLogin(): void {
-    this.loading = true
+    this.loading = true;
     const formData = {
       email: this.email,
       password: this.password,
       role: this.role,
-      username: this.username,
+      userName: this.userName,
     };
 
     this.consumeService.postRequest('/api/open/user/login', formData, null).subscribe(
       (response) => {
         this.loading = false;
-        console.log('Full response:', response);
+        console.log('Full Response:', response);
+        console.log('Type of response:', typeof response);
 
-        // Ensure response has the required fields
-        if (response && response.status && response.token && response.id !== undefined && response.role && response.userName) {
-          if (response.status.trim().toLowerCase() === 'success') { // Adjust based on actual success message
-            const { token, id, role, userName } = response;
+        // Ensure response is an object
+        const parsedResponse = typeof response === 'string' ? JSON.parse(response) : response;
 
-            // Save session data
-            this.sessionService.saveToken(token);
-            this.sessionService.saveUserId(id);
-            this.sessionService.saverole(role);
-            this.sessionService.saveuserName(userName);
+        // Check for required fields
+        if (
+          parsedResponse?.status?.toLowerCase() === 'success' &&
+          parsedResponse?.token &&
+          parsedResponse?.id !== undefined &&
+          parsedResponse?.role &&
+          parsedResponse?.userName
+        ) {
+          const { token, id, role, userName } = parsedResponse;
 
-            this.snackBar.open('Login Successful', 'Close', { duration: 3000 });
-            this.resetform();
-            this.router.navigate(['/dashboard']);
-          } else {
-            console.error('Login failed:', response);
-            this.snackBar.open('Login Failed: ' + (response.message || 'Unexpected error'), 'Close', { duration: 5000 });
-          }
+          // Save session data
+          this.sessionService.saveToken(token);
+          this.sessionService.saveUserId(id);
+          this.sessionService.saverole(role);
+          this.sessionService.saveuserName(userName);
+
+          this.snackBar.open('Login Successful', 'Close', { duration: 3000 });
+          this.resetform();
+          this.router.navigate(['/dashboard']);
         } else {
-          console.error('Invalid response format:', response);
-          this.snackBar.open('Login Failed: Invalid response format', 'Close', { duration: 5000 });
+          console.error('Login failed:', parsedResponse);
+          this.snackBar.open('Login Failed: ' + (parsedResponse.message || 'Unexpected error'), 'Close', { duration: 5000 });
         }
       },
       (error) => {
@@ -88,7 +93,7 @@ export class LoginComponent {
         this.loading = false;
       }
     );
-
-
   }
+
+
 }

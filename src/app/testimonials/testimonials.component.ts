@@ -3,19 +3,20 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConsumeService } from '../services/consume.service';
+import { SessionService } from '../services/session.service';
 import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-testimonials',
-   standalone: true,
-    imports: [ReactiveFormsModule,NgFor],
+  standalone: true,
+  imports: [ReactiveFormsModule, NgFor],
   templateUrl: './testimonials.component.html',
   styleUrls: ['./testimonials.component.css'],
 })
 export class TestimonialsComponent implements OnInit {
-onDelete(_t58: any) {
-throw new Error('Method not implemented.');
-}
+  onDelete(_t58: any) {
+    throw new Error('Method not implemented.');
+  }
   testimonialForm: FormGroup;
   testimonials: any[] = [];
   loading = false;
@@ -23,6 +24,7 @@ throw new Error('Method not implemented.');
   constructor(
     private fb: FormBuilder,
     private consumeService: ConsumeService,
+    private sessionService: SessionService,
     private snackBar: MatSnackBar
   ) {
     // Initialize Form
@@ -58,7 +60,8 @@ throw new Error('Method not implemented.');
 
     this.loading = true;
     const formData = this.testimonialForm.value;
-
+    const token = this.sessionService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
     this.consumeService.postRequest('/api/open/ratings', formData, null).subscribe(
       (response) => {
         this.loading = false;
