@@ -14,9 +14,9 @@ import { NgFor } from '@angular/common';
   styleUrls: ['./testimonials.component.css'],
 })
 export class TestimonialsComponent implements OnInit {
-  onDelete(_t58: any) {
-    throw new Error('Method not implemented.');
-  }
+onDelete(_t58: any) {
+throw new Error('Method not implemented.');
+}
   testimonialForm: FormGroup;
   testimonials: any[] = [];
   loading = false;
@@ -36,20 +36,30 @@ export class TestimonialsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loadTestimonials();
+    this.loadTestimonials();
   }
 
   // Load Testimonials from API
-  // loadTestimonials() {
-  //   this.consumeService.getRequest('/api/open/ratings').subscribe(
-  //     (response: any) => {
-  //       this.testimonials = response.data;
-  //     },
-  //     (error) => {
-  //       console.error('Error loading testimonials:', error);
-  //     }
-  //   );
-  // }
+  loadTestimonials() {
+    const token = this.sessionService.getToken();
+    console.log('Token:', token); // Log token to verify it's being retrieved correctly
+
+    if (!token) {
+      this.snackBar.open('Token is missing or invalid. Please log in again.', 'Close', { duration: 5000 });
+      return;
+    }
+
+    // Get Testimonials from API
+    this.consumeService.getRequest('/api/ratings/get-testimonials/all', token).subscribe(
+      (response: any) => {
+        this.testimonials = response.data;
+      },
+      (error) => {
+        console.error('Error loading testimonials:', error);
+        this.snackBar.open('Failed to load testimonials. Please try again.', 'Close', { duration: 5000 });
+      }
+    );
+  }
 
   // Submit Testimonial
   submitTestimonial() {
@@ -61,13 +71,22 @@ export class TestimonialsComponent implements OnInit {
     this.loading = true;
     const formData = this.testimonialForm.value;
     const token = this.sessionService.getToken();
+    console.log('Token:', token); // Log token to verify it's being retrieved correctly
+
+    if (!token) {
+      this.snackBar.open('Token is missing or invalid. Please log in again.', 'Close', { duration: 5000 });
+      this.loading = false;
+      return;
+    }
+
     const headers = { Authorization: `Bearer ${token}` };
-    this.consumeService.postRequest('/api/open/ratings', formData, null).subscribe(
+
+    this.consumeService.postRequest('/api/ratings/post-testimonials', formData, token).subscribe(
       (response) => {
         this.loading = false;
         this.snackBar.open('Testimonial submitted successfully!', 'Close', { duration: 3000 });
         this.testimonialForm.reset();
-        // this.loadTestimonials(); // Refresh the list
+        this.loadTestimonials(); // Refresh the list
       },
       (error) => {
         this.loading = false;
@@ -87,7 +106,13 @@ export class TestimonialsComponent implements OnInit {
   // Delete Testimonial
   // onDelete(testimonial: any) {
   //   if (confirm('Are you sure you want to delete this testimonial?')) {
-  //     this.consumeService.deleteRequest(`/api/open/ratings/${testimonial.id}`, null).subscribe(
+  //     const token = this.sessionService.getToken();
+  //     if (!token) {
+  //       this.snackBar.open('Token is missing or invalid. Please log in again.', 'Close', { duration: 5000 });
+  //       return;
+  //     }
+
+  //     this.consumeService.deleteRequest(`/api/open/ratings/${testimonial.id}`, token).subscribe(
   //       (response) => {
   //         this.snackBar.open('Testimonial deleted successfully!', 'Close', { duration: 3000 });
   //         this.loadTestimonials(); // Refresh the list

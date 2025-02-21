@@ -10,7 +10,7 @@ import { SessionService } from '../services/session.service';
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [NgFor, NgIf, CommonModule, ReactiveFormsModule, FormsModule], 
+  imports: [NgFor, NgIf, CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
@@ -85,9 +85,7 @@ export class ContactComponent implements OnInit {
     this.selectedPastMessage = message;
   }
 
-  // Rest of your methods (searchMessages, selectMessage, sendReply, pagination, etc.)
-
-
+  // Search Messages
   searchMessages() {
     this.filteredMessages = this.messages.filter(message =>
       message.firstName.toLowerCase().includes(this.searchText.toLowerCase()) ||
@@ -109,13 +107,21 @@ export class ContactComponent implements OnInit {
     }
 
     const replyData = {
-      messageId: this.selectedMessage.id,
       replyMessage: this.replyForm.value.replyMessage
     };
 
-    this.consumeService.postRequest('/api/contact-us/reply', replyData, null).subscribe(
-      () => {
-        this.snackBar.open('Reply sent successfully!', 'Close', { duration: 3000 });
+    const messageId = this.selectedMessage.id;  
+
+    const token = this.sessionService.getToken();
+    if (!token) {
+      this.snackBar.open('Session expired. Please login again.', 'Close', { duration: 5000 });
+      return;
+    }
+
+    // Make the API call with messageId as query parameter and reply message in the body
+    this.consumeService.postRequest(`/api/contact-us/reply?messageId=${messageId}`, replyData, token).subscribe(
+      (response) => {
+        this.snackBar.open('Reply sent successfully! The message has been delivered to the email.', 'Close', { duration: 3000 });
         this.replyForm.reset();
         this.selectedMessage = null;
       },
@@ -125,6 +131,7 @@ export class ContactComponent implements OnInit {
       }
     );
   }
+
 
   get paginatedMessages() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
@@ -147,4 +154,3 @@ export class ContactComponent implements OnInit {
     }
   }
 }
-
