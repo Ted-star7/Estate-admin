@@ -10,17 +10,18 @@ import { RouterModule } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-
-
 export class SidebarComponent {
-  @Input() isSidebarOpen: boolean = false; // Declare the input property
-  @Output() toggleSidebar = new EventEmitter<void>(); // Declare the output event
- 
-  constructor(private sessionService: SessionService){
-    
-  }
-  isDropdownOpen = false;
+  @Input() isSidebarOpen: boolean = false; // Sidebar state
+  @Output() toggleSidebar = new EventEmitter<void>(); // Sidebar toggle event
+  isDropdownOpen = false; // Dropdown state
 
+  properties = [
+    { id: 101, name: "Luxury Villa" },
+    { id: 102, name: "Modern Apartment" },
+    { id: 103, name: "Beach House" },
+  ];
+
+  constructor(private sessionService: SessionService) { }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -28,6 +29,6 @@ export class SidebarComponent {
 
   logout() {
     console.log('Logout clicked');
-    this.sessionService.deleteSessions(); 
+    this.sessionService.deleteSessions();
   }
 }

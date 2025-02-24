@@ -41,16 +41,16 @@ throw new Error('Method not implemented.');
 
   // Load Testimonials from API
   loadTestimonials() {
-    const token = this.sessionService.getToken();
-    console.log('Token:', token); // Log token to verify it's being retrieved correctly
+    // const token = this.sessionService.getToken();
+    // console.log('Token:', token); 
 
-    if (!token) {
-      this.snackBar.open('Token is missing or invalid. Please log in again.', 'Close', { duration: 5000 });
-      return;
-    }
+    // if (!token) {
+    //   this.snackBar.open('Token is missing or invalid. Please log in again.', 'Close', { duration: 5000 });
+    //   return;
+    // }
 
     // Get Testimonials from API
-    this.consumeService.getRequest('/api/ratings/get-testimonials/all', token).subscribe(
+    this.consumeService.getRequest('/api/open/ratings/get-testimonials/all', null).subscribe(
       (response: any) => {
         this.testimonials = response.data;
       },

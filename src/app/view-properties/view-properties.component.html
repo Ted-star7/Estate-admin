@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="header">
+    <h1>{{ properties.length }} Properties</h1>
+    <div class="sort">
+      Sort by: <span class="font-semibold">Default Order</span>
+    </div>
+  </div>
+  <div class="grid">
+    <!-- Property Card (Repeated for each property) -->
+    <div class="card" *ngFor="let property of properties">
+      <img
+        [src]="property.imageUrl || 'https://placehold.co/600x400'"
+        [alt]="property.propertyName"
+      />
+      <div class="content">
+        <div class="tags">
+          <span class="featured">FEATURED</span>
+          <span>{{ property.proertyType }}</span>
+          <span>{{ property.city }}</span>
+          <span>{{ property.status }}</span>
+        </div>
+        <div class="price">KES. {{ property.price }}</div>
+        <div class="description">{{ property.propertydetails }}</div>
+        <div class="actions">
+          <button><i class="fab fa-whatsapp"></i> WhatsApp</button>
+          <button><i class="fas fa-phone-alt"></i> Call</button>
+          <button class="view-details">View Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

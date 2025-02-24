@@ -40,13 +40,14 @@ body {
 }
 
 .logo img {
-  height: 50px;
+  height: 80px;
 }
 
 .logo p {
   color: #fff;
   font-size: 18px;
   font-weight: bold;
+  font-weight: 700;
   margin-left: 10px;
 }
 
