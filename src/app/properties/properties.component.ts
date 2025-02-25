@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { ConsumeService } from '../services/consume.service'; // Adjust the path if needed
+import { ConsumeService } from '../services/consume.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { SessionService } from '../services/session.service';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Import Snackbar
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Define the structure of the property details
 interface PropertyDetails {
@@ -27,7 +27,7 @@ interface PropertyDetails {
   standalone: true,
   templateUrl: './properties.component.html',
   styleUrls: ['./properties.component.css'],
-  imports: [CommonModule, HttpClientModule, FormsModule, MatSnackBarModule, RouterModule] // Include MatSnackBarModule
+  imports: [CommonModule, HttpClientModule, FormsModule, MatSnackBarModule, RouterModule], // Include MatSnackBarModule
 })
 export class PropertiesComponent {
   selectedFiles: File[] = [];
@@ -42,7 +42,7 @@ export class PropertiesComponent {
     squareFeet: '',
     bathrooms: '',
     parkingSpace: '',
-    propertyDetails: ''
+    propertyDetails: '',
   };
 
   constructor(
@@ -61,7 +61,7 @@ export class PropertiesComponent {
   showSnackbar(message: string, isError: boolean = false): void {
     this.snackBar.open(message, 'Close', {
       duration: 3000, // 3 seconds
-      panelClass: isError ? 'snackbar-error' : 'snackbar-success'
+      panelClass: isError ? 'snackbar-error' : 'snackbar-success',
     });
   }
 
@@ -70,12 +70,10 @@ export class PropertiesComponent {
     console.log('Submitting property details:', this.propertyDetails);
 
     const formData = new FormData();
-    // const token = this.sessionService.getToken()
-    // Append property details
-    Object.keys(this.propertyDetails).forEach((key) => {
-      const validKey = key as keyof PropertyDetails;
-      formData.append(validKey, this.propertyDetails[validKey]);
-    });
+
+    // Convert propertyDetails to a JSON string and append it as 'property'
+    const propertyJson = JSON.stringify(this.propertyDetails);
+    formData.append('property', propertyJson);
 
     // Append images
     this.selectedFiles.forEach((file) => {
@@ -83,22 +81,21 @@ export class PropertiesComponent {
     });
 
     // API Call
-    this.consumeService.postFormData('/api/open/properties', formData, null)
-      .subscribe({
-        next: (response) => {
-          console.log('Property added successfully:', response);
-          this.showSnackbar('Property added successfully!');
-          this.router.navigate(['/properties']); // Redirect after success
-        },
-        error: (error) => {
-          console.error('Error adding property:', error);
-          this.showSnackbar('Error adding property. Please try again.', true);
-        }
-      });
+    this.consumeService.postFormData('/api/open/properties', formData, null).subscribe({
+      next: (response) => {
+        console.log('Property added successfully:', response);
+        this.showSnackbar('Property added successfully!');
+        this.router.navigate(['/properties']); // Redirect after success
+      },
+      error: (error) => {
+        console.error('Error adding property:', error);
+        this.showSnackbar('Error adding property. Please try again.', true);
+      },
+    });
   }
 
   // Navigate to View Properties
   navigateToProperties(): void {
-    this.router.navigate(['/properties']);
+    this.router.navigate(['/view-properties']);
   }
 }

@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f3f3f3;
+  background-color: #f2f2f2;
   margin: 0;
   padding: 0;
 }
@@ -19,12 +19,23 @@ body {
 }
 
 .header h1 {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
+  color: #595959;
 }
 
 .header .sort {
   font-size: 14px;
+  color: #595959;
+}
+
+.header .sort select {
+  padding: 5px;
+  border: 1px solid #f2935c;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  color: #595959;
+  cursor: pointer;
 }
 
 .grid {
@@ -50,6 +61,11 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .card img {
@@ -70,7 +86,7 @@ body {
 }
 
 .card .tags span {
-  background-color: #333;
+  background-color: #f2762e;
   color: #fff;
   font-size: 10px;
   font-weight: bold;
@@ -79,18 +95,19 @@ body {
 }
 
 .card .tags .featured {
-  background-color: #8bc34a;
+  background-color: #f25c05;
 }
 
 .card .price {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
+  color: #595959;
 }
 
 .card .description {
   font-size: 14px;
-  color: #555;
+  color: #595959;
   margin-bottom: 15px;
 }
 
@@ -106,48 +123,101 @@ body {
   gap: 5px;
   font-size: 14px;
   padding: 5px 10px;
-  border: 1px solid #8bc34a;
+  border: 1px solid #f25c05;
   border-radius: 3px;
   background-color: #fff;
-  color: #8bc34a;
-  cursor: pointer;
-}
-
-.card .actions .view-details {
-  background-color: #8bc34a;
-  color: #fff;
-  border: none;
-}
-
-.card .actions button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
-  padding: 5px 10px;
-  border: 1px solid #8bc34a;
-  border-radius: 3px;
-  background-color: #fff;
-  color: #8bc34a;
+  color: #f25c05;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .card .actions button:hover {
-  background-color: #8bc34a;
+  background-color: #f25c05;
   color: #fff;
 }
 
-.card .actions button i {
-  margin-right: 5px;
+.card .actions .delete {
+  border-color: #ff0000;
+  color: #ff0000;
+}
+
+.card .actions .delete:hover {
+  background-color: #ff0000;
+  color: #fff;
 }
 
 .card .actions .view-details {
-  background-color: #8bc34a;
+  background-color: #f25c05;
   color: #fff;
   border: none;
 }
 
 .card .actions .view-details:hover {
-  background-color: #7cb342;
+  background-color: #f2762e;
+}
+
+/* Add these styles for the edit form */
+.edit-form {
+  padding: 15px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+.edit-form .form-group {
+  margin-bottom: 15px;
+}
+
+.edit-form label {
+  display: block;
+  font-size: 14px;
+  color: #595959;
+  margin-bottom: 5px;
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #f2935c;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #595959;
+}
+
+.edit-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.edit-form .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.edit-form .form-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-form .form-actions .cancel {
+  background-color: #595959;
+  color: #fff;
+}
+
+.edit-form .form-actions .cancel:hover {
+  background-color: #333;
+}
+
+.edit-form .form-actions .save {
+  background-color: #f25c05;
+  color: #fff;
+}
+
+.edit-form .form-actions .save:hover {
+  background-color: #f2762e;
 }
