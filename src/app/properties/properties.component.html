@@ -1,14 +1,11 @@
 <div class="container">
-  <!-- Header with Breadcrumbs -->
   <div class="header">
     <div class="breadcrumb">
       <a href="/dashboard">Dashboard</a> &gt;
       <a href="/add-property" class="active">Add Property</a>
     </div>
-    <button class="add-property-btn">+ Add Property</button>
   </div>
 
-  <!-- Property Form Card -->
   <div class="card">
     <h2>Property Information</h2>
 
@@ -17,36 +14,26 @@
       <i class="fas fa-image"></i>
       <p>
         Drop your images here, or
-        <input
-          type="file"
-          id="file-upload"
-          multiple
-          (change)="onFileSelected($event)"
-        />
+        <input type="file" id="file-upload" multiple (change)="onFileSelected($event)" />
         <label for="file-upload" class="browse-link">click to browse</label>
       </p>
-      <p>1600 x 1200 (4:3) recommended. PNG, JPG, and GIF files are allowed</p>
     </div>
 
-    <!-- Property Details Form -->
-    <form (ngSubmit)="onSubmit()">
-      <!-- Wrap the form in a <form> element -->
+    <!-- Show Loading Spinner While Submitting -->
+    <div *ngIf="isLoading" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i> Uploading Property...
+    </div>
+
+    <form (ngSubmit)="onSubmit()" *ngIf="!isLoading">
       <div class="form-grid">
         <div class="form-group">
           <label>Property Name</label>
-          <input
-            type="text"
-            placeholder="Enter property name"
-            [(ngModel)]="propertyDetails.propertyName"
-            name="propertyName"
-          />
+          <input type="text" placeholder="Enter property name" [(ngModel)]="propertyDetails.propertyName" name="propertyName" />
         </div>
+
         <div class="form-group">
           <label>Property Type</label>
-          <select
-            [(ngModel)]="propertyDetails.propertyType"
-            name="propertyType"
-          >
+          <select [(ngModel)]="propertyDetails.propertyType" name="propertyType">
             <option>Apartment</option>
             <option>Bungalow</option>
             <option>Commercial</option>
@@ -54,106 +41,49 @@
             <option>Other</option>
           </select>
         </div>
+
         <div class="form-group">
           <label>Price (KES)</label>
-          <div class="input-group">
-            <span>KES</span>
-            <input
-              type="text"
-              placeholder="Enter price"
-              [(ngModel)]="propertyDetails.price"
-              name="price"
-            />
-          </div>
+          <input type="text" placeholder="Enter price" [(ngModel)]="propertyDetails.price" name="price" />
         </div>
+
         <div class="form-group">
           <label>Location</label>
-          <input
-            type="text"
-            placeholder="Enter location (e.g., Nairobi, Kilimani)"
-            [(ngModel)]="propertyDetails.location"
-            name="location"
-          />
+          <input type="text" placeholder="Enter location" [(ngModel)]="propertyDetails.location" name="location" />
         </div>
-        <div class="form-group">
-          <label>City</label>
-          <select [(ngModel)]="propertyDetails.city" name="city">
-            <option>Nairobi</option>
-            <option>Mombasa</option>
-            <option>Kisumu</option>
-            <option>Nakuru</option>
-            <option>Eldoret</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Current Status</label>
-          <select [(ngModel)]="propertyDetails.status" name="status">
-            <option>Available</option>
-            <option>Sold</option>
-            <option>Under Contract</option>
-          </select>
-        </div>
-        <div class="form-group">
+
+        <div class="form-group" >
           <label>Square Feet</label>
-          <input
-            type="text"
-            placeholder="Enter square feet"
-            [(ngModel)]="propertyDetails.squareFeet"
-            name="squareFeet"
-          />
+          <input type="text" placeholder="Enter square feet" [(ngModel)]="propertyDetails.squareFeet" name="squareFeet" />
         </div>
-        <div class="form-group">
+
+        <div class="form-group" *ngIf="!isLand()">
           <label>Bedrooms</label>
-          <input
-            type="number"
-            placeholder="Enter number of bedrooms"
-            [(ngModel)]="propertyDetails.bedrooms"
-            name="bedrooms"
-          />
+          <input type="number" placeholder="Enter number of bedrooms" [(ngModel)]="propertyDetails.bedrooms" name="bedrooms" />
         </div>
-        <div class="form-group">
+
+        <div class="form-group" *ngIf="!isLand()">
           <label>Bathrooms</label>
-          <input
-            type="number"
-            placeholder="Enter number of bathrooms"
-            [(ngModel)]="propertyDetails.bathrooms"
-            name="bathrooms"
-          />
+          <input type="number" placeholder="Enter number of bathrooms" [(ngModel)]="propertyDetails.bathrooms" name="bathrooms" />
         </div>
-        <div class="form-group">
+
+        <div class="form-group" *ngIf="!isLand()">
           <label>Parking Spaces</label>
-          <select
-            [(ngModel)]="propertyDetails.parkingSpace"
-            name="parkingSpace"
-          >
+          <select [(ngModel)]="propertyDetails.parkingSpace" name="parkingSpace">
             <option>Available</option>
             <option>Not Available</option>
           </select>
         </div>
       </div>
 
-      <!-- Property Description -->
       <div class="form-group">
         <label>Property Details</label>
-        <textarea
-          placeholder="Enter Property Details"
-          [(ngModel)]="propertyDetails.propertyDetails"
-          name="propertyDetails"
-        ></textarea>
+        <textarea placeholder="Enter Property Details" [(ngModel)]="propertyDetails.propertyDetails" name="propertyDetails"></textarea>
       </div>
 
-      <!-- Form Actions -->
       <div class="form-actions">
-        <button type="button" class="cancel-btn">Cancel</button>
         <button type="submit" class="add-btn">Add Property</button>
-        <button
-          type="button"
-          class="view-properties-btn"
-          [routerLink]="['/view-properties']"
-        >
-          View Properties
-        </button>
+        <button type="button" class="view-properties-btn" [routerLink]="['/view-properties']">View Properties</button>
       </div>
     </form>
   </div>

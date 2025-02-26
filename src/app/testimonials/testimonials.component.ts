@@ -14,9 +14,7 @@ import { NgFor } from '@angular/common';
   styleUrls: ['./testimonials.component.css'],
 })
 export class TestimonialsComponent implements OnInit {
-onDelete(_t58: any) {
-throw new Error('Method not implemented.');
-}
+
   testimonialForm: FormGroup;
   testimonials: any[] = [];
   loading = false;
@@ -71,7 +69,7 @@ throw new Error('Method not implemented.');
     this.loading = true;
     const formData = this.testimonialForm.value;
     const token = this.sessionService.getToken();
-    console.log('Token:', token); // Log token to verify it's being retrieved correctly
+    console.log('Token:', token); 
 
     if (!token) {
       this.snackBar.open('Token is missing or invalid. Please log in again.', 'Close', { duration: 5000 });
@@ -104,24 +102,24 @@ throw new Error('Method not implemented.');
   }
 
   // Delete Testimonial
-  // onDelete(testimonial: any) {
-  //   if (confirm('Are you sure you want to delete this testimonial?')) {
-  //     const token = this.sessionService.getToken();
-  //     if (!token) {
-  //       this.snackBar.open('Token is missing or invalid. Please log in again.', 'Close', { duration: 5000 });
-  //       return;
-  //     }
+  onDelete(testimonial: any) {
+    if (confirm('Are you sure you want to delete this testimonial?')) {
+      const token = this.sessionService.getToken();
+      if (!token) {
+        this.snackBar.open('Token is missing or invalid. Please log in again.', 'Close', { duration: 5000 });
+        return;
+      }
 
-  //     this.consumeService.deleteRequest(`/api/open/ratings/${testimonial.id}`, token).subscribe(
-  //       (response) => {
-  //         this.snackBar.open('Testimonial deleted successfully!', 'Close', { duration: 3000 });
-  //         this.loadTestimonials(); // Refresh the list
-  //       },
-  //       (error) => {
-  //         console.error('Error deleting testimonial:', error);
-  //         this.snackBar.open('Failed to delete testimonial. Please try again.', 'Close', { duration: 5000 });
-  //       }
-  //     );
-  //   }
-  // }
+      this.consumeService.deleteRequest(`/api/ratings/${testimonial.id}`, token).subscribe(
+        (response) => {
+          this.snackBar.open('Testimonial deleted successfully!', 'Close', { duration: 3000 });
+          this.loadTestimonials(); // Refresh the list
+        },
+        (error) => {
+          console.error('Error deleting testimonial:', error);
+          this.snackBar.open('Failed to delete testimonial. Please try again.', 'Close', { duration: 5000 });
+        }
+      );
+    }
+  }
 }

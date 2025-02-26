@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./view-properties.component.css'],
 })
 export class ViewPropertiesComponent implements OnInit {
-  properties: any[] = []; // Array to store fetched properties
+  properties: any[] = [];
   loading: boolean = false;
 
   constructor(
@@ -25,17 +25,17 @@ export class ViewPropertiesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchProperties(); // Fetch properties when the component initializes
+    this.fetchProperties();
   }
 
-  // Fetch properties from the API
+
   fetchProperties(): void {
-    this.loading = true; // Show loading state
+    this.loading = true;
     this.consumeService.getRequest('/api/open/properties', null).subscribe({
       next: (response: any) => {
         this.properties = response.map((property: any) => ({ ...property, isEditing: false })); // Add isEditing flag
         console.log('Properties fetched successfully:', this.properties);
-        this.loading = false; // Hide loading state
+        this.loading = false;
       },
       error: (error) => {
         console.error('Error fetching properties:', error);
@@ -57,43 +57,65 @@ export class ViewPropertiesComponent implements OnInit {
 
   // Save updated property details
   saveProperty(property: any): void {
-    const token = this.sessionService.getToken(); // Get token from SessionService
-    if (!token) {
-      this.snackBar.open('Authentication required', 'Close', { duration: 3000 });
-      return;
+    // Create a FormData object
+    const formData = new FormData();
+
+    // Append the property object as a JSON string
+    formData.append('property', JSON.stringify(property));
+
+    // Append images (if any)
+    if (property.images && property.images.length > 0) {
+      property.images.forEach((image: File, index: number) => {
+        formData.append('images', image); // Append each image file
+      });
     }
 
-    this.consumeService.putRequest(`/api/open/properties/${property.id}`, property, token).subscribe(
+    // Send the PUT request
+    this.consumeService.putRequest(`/api/open/properties/${property.id}`, formData).subscribe(
       (response) => {
         this.snackBar.open('Property updated successfully', 'Close', { duration: 3000 });
-        property.isEditing = false; // Exit edit mode
+        property.isEditing = false;
         this.fetchProperties(); // Refresh the property list
       },
       (error) => {
         console.error('Error updating property:', error);
-        this.snackBar.open('Failed to update property', 'Close', { duration: 5000 });
+        this.snackBar.open(`Failed to update property: ${error.error?.message || 'Unknown error'}`, 'Close', { duration: 5000 });
       }
     );
   }
 
   // Delete property
   deleteProperty(propertyId: string): void {
-    const token = this.sessionService.getToken(); 
-    if (!token) {
-      this.snackBar.open('Authentication required', 'Close', { duration: 3000 });
-      return;
-    }
+    // const token = this.sessionService.getToken();
+    // if (!token) {
+    //   this.snackBar.open('Authentication required', 'Close', { duration: 3000 });
+    //   return;
+    // }
 
-    this.consumeService.deleteRequest(`/api/open/properties/${propertyId}`, token).subscribe(
-      (response) => {
-        this.snackBar.open('Property deleted successfully', 'Close', { duration: 3000 });
-        this.fetchProperties(); // Refresh the property list
-      },
-      (error) => {
-        console.error('Error deleting property:', error);
-        this.snackBar.open('Failed to delete property', 'Close', { duration: 5000 });
-      }
-    );
+    // Show a confirmation snackbar
+    const snackBarRef = this.snackBar.open('Are you sure you want to delete this property?', 'Delete', {
+      duration: 5000,
+    });
+
+    // Subscribe to the snackbar action (e.g., when the user clicks "Delete")
+    snackBarRef.onAction().subscribe(() => {
+      // User confirmed deletion
+      this.consumeService.deleteRequest(`/api/open/properties/${propertyId}`, null).subscribe(
+        (response) => {
+          this.snackBar.open('Property deleted successfully', 'Close', { duration: 3000 });
+          this.fetchProperties(); // Refresh the property list
+        },
+        (error) => {
+          console.error('Error deleting property:', error);
+          this.snackBar.open('Failed to delete property', 'Close', { duration: 5000 });
+        }
+      );
+    });
+
+    // Optional: Handle when the snackbar is dismissed without action
+    snackBarRef.afterDismissed().subscribe(() => {
+      console.log('Deletion canceled');
+    });
   }
 
   // Sort properties

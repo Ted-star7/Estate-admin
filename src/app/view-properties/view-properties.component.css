@@ -1,3 +1,4 @@
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f2f2f2;
@@ -11,6 +12,7 @@ body {
   padding: 20px;
 }
 
+/* Header */
 .header {
   display: flex;
   justify-content: space-between;
@@ -30,42 +32,38 @@ body {
 }
 
 .header .sort select {
-  padding: 5px;
+  padding: 8px;
   border: 1px solid #f2935c;
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: #fff;
   color: #595959;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+.header .sort select:hover {
+  border-color: #f25c05;
+}
+
+/* Grid Layout */
 .grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
+/* Card */
 .card {
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .card img {
@@ -81,17 +79,17 @@ body {
 .card .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 6px;
   margin-bottom: 10px;
 }
 
 .card .tags span {
   background-color: #f2762e;
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 3px;
+  padding: 5px 12px;
+  border-radius: 5px;
 }
 
 .card .tags .featured {
@@ -102,19 +100,21 @@ body {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #595959;
+  color: #333;
 }
 
 .card .description {
   font-size: 14px;
   color: #595959;
   margin-bottom: 15px;
+  line-height: 1.5;
 }
 
 .card .actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 15px;
 }
 
 .card .actions button {
@@ -122,22 +122,27 @@ body {
   align-items: center;
   gap: 5px;
   font-size: 14px;
-  padding: 5px 10px;
-  border: 1px solid #f25c05;
-  border-radius: 3px;
-  background-color: #fff;
-  color: #f25c05;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  transition: all 0.3s ease;
 }
 
-.card .actions button:hover {
+.card .actions .edit {
+  border: 1px solid #f25c05;
+  background-color: #fff;
+  color: #f25c05;
+}
+
+.card .actions .edit:hover {
   background-color: #f25c05;
   color: #fff;
 }
 
 .card .actions .delete {
-  border-color: #ff0000;
+  border: 1px solid #ff0000;
+  background-color: #fff;
   color: #ff0000;
 }
 
@@ -156,11 +161,12 @@ body {
   background-color: #f2762e;
 }
 
-/* Add these styles for the edit form */
+/* Edit Form */
 .edit-form {
-  padding: 15px;
-  background-color: #f2f2f2;
+  padding: 20px;
+  background-color: #f9f9f9;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .edit-form .form-group {
@@ -170,18 +176,27 @@ body {
 .edit-form label {
   display: block;
   font-size: 14px;
-  color: #595959;
+  color: #333;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .edit-form input,
 .edit-form textarea {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #f2935c;
+  padding: 10px;
+  border: 1px solid #d9d9d9;
   border-radius: 5px;
   font-size: 14px;
-  color: #595959;
+  color: #333;
+  background-color: #fff;
+  transition: border 0.3s ease;
+}
+
+.edit-form input:focus,
+.edit-form textarea:focus {
+  border-color: #f25c05;
+  outline: none;
 }
 
 .edit-form textarea {
@@ -193,11 +208,11 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 15px;
 }
 
 .edit-form .form-actions button {
-  padding: 8px 16px;
-  border: none;
+  padding: 10px 16px;
   border-radius: 5px;
   font-size: 14px;
   cursor: pointer;
@@ -207,6 +222,7 @@ body {
 .edit-form .form-actions .cancel {
   background-color: #595959;
   color: #fff;
+  border: none;
 }
 
 .edit-form .form-actions .cancel:hover {
@@ -216,8 +232,59 @@ body {
 .edit-form .form-actions .save {
   background-color: #f25c05;
   color: #fff;
+  border: none;
 }
 
 .edit-form .form-actions .save:hover {
   background-color: #f2762e;
+}
+
+/* Scrollable Image Container */
+.image-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.scrollable-images {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+}
+
+.scrollable-images img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Navigation Buttons */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 1;
+}
+
+.scroll-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.scroll-btn.left {
+  left: 5px;
+}
+
+.scroll-btn.right {
+  right: 5px;
 }

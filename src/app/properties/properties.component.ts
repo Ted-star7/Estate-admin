@@ -7,7 +7,6 @@ import { Router, RouterModule } from '@angular/router';
 import { SessionService } from '../services/session.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
-// Define the structure of the property details
 interface PropertyDetails {
   propertyName: string;
   propertyType: string;
@@ -27,7 +26,7 @@ interface PropertyDetails {
   standalone: true,
   templateUrl: './properties.component.html',
   styleUrls: ['./properties.component.css'],
-  imports: [CommonModule, HttpClientModule, FormsModule, MatSnackBarModule, RouterModule], // Include MatSnackBarModule
+  imports: [CommonModule, HttpClientModule, FormsModule, MatSnackBarModule, RouterModule],
 })
 export class PropertiesComponent {
   selectedFiles: File[] = [];
@@ -44,58 +43,71 @@ export class PropertiesComponent {
     parkingSpace: '',
     propertyDetails: '',
   };
+  isLoading = false; // Loading spinner flag
 
   constructor(
     private consumeService: ConsumeService,
     private router: Router,
     private sessionService: SessionService,
-    private snackBar: MatSnackBar // Inject MatSnackBar
+    private snackBar: MatSnackBar
   ) { }
 
-  // Handle file selection
+  isLand(): boolean {
+    return this.propertyDetails.propertyType === 'Land';
+  }
+
   onFileSelected(event: any): void {
     this.selectedFiles = Array.from(event.target.files);
   }
 
-  // Show Snackbar Message
   showSnackbar(message: string, isError: boolean = false): void {
     this.snackBar.open(message, 'Close', {
-      duration: 3000, // 3 seconds
+      duration: 3000,
       panelClass: isError ? 'snackbar-error' : 'snackbar-success',
     });
   }
 
-  // Submit property details and images
+  resetForm(): void {
+    this.propertyDetails = {
+      propertyName: '',
+      propertyType: '',
+      price: '',
+      city: '',
+      status: '',
+      location: '',
+      bedrooms: '',
+      squareFeet: '',
+      bathrooms: '',
+      parkingSpace: '',
+      propertyDetails: '',
+    };
+    this.selectedFiles = [];
+  }
+
   onSubmit(): void {
     console.log('Submitting property details:', this.propertyDetails);
 
     const formData = new FormData();
+    formData.append('property', JSON.stringify(this.propertyDetails)); // Send property as JSON string
 
-    // Convert propertyDetails to a JSON string and append it as 'property'
-    const propertyJson = JSON.stringify(this.propertyDetails);
-    formData.append('property', propertyJson);
-
-    // Append images
     this.selectedFiles.forEach((file) => {
-      formData.append('image', file, file.name);
+      formData.append('images', file, file.name);
     });
 
-    // API Call
+    this.isLoading = true; // Show spinner
+
     this.consumeService.postFormData('/api/open/properties', formData, null).subscribe({
       next: (response) => {
         console.log('Property added successfully:', response);
         this.showSnackbar('Property added successfully!');
-        this.router.navigate(['/properties']); // Redirect after success
+        this.resetForm(); // Reset form
+        this.isLoading = false; // Hide spinner
       },
       error: (error) => {
         console.error('Error adding property:', error);
         this.showSnackbar('Error adding property. Please try again.', true);
+        this.isLoading = false; // Hide spinner
       },
     });
-  }
-
-  // Navigate to View Properties
-  navigateToProperties(): void {
-    this.router.navigate(['/view-properties']);
   }
 }

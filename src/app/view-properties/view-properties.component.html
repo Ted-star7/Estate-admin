@@ -14,16 +14,41 @@
     </div>
   </div>
 
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+
   <!-- Property Grid -->
-  <div class="grid">
+  <div class="grid" *ngIf="!loading">
     <!-- Property Card (Repeated for each property) -->
     <div class="card" *ngFor="let property of properties">
       <!-- Display Mode -->
       <div *ngIf="!property.isEditing">
+        <!-- Image Display Logic -->
+        <div *ngIf="property.imageUrls && property.imageUrls.length > 0">
+          <!-- Single Image Display -->
+          <img
+            *ngIf="property.imageUrls.length === 1"
+            [src]="property.imageUrls[0]"
+            [alt]="property.propertyName"
+            class="single-image"
+          />
+          
+          <!-- Scrollable Images for Multiple -->
+          <div class="scrollable-images" *ngIf="property.imageUrls.length > 1">
+            <img *ngFor="let imageUrl of property.imageUrls" [src]="imageUrl" [alt]="property.propertyName" />
+          </div>
+        </div>
+
+        <!-- Fallback Image -->
         <img
-          [src]="property.imageUrl || 'https://placehold.co/600x400'"
-          [alt]="property.propertyName"
+          *ngIf="!property.imageUrls || property.imageUrls.length === 0"
+          [src]="'https://storage.googleapis.com/a1aa/image/Q_WfxGFow3QXXebFR-oKFXwiY2ftCXROnTy73Yjp03M.jpg'"
+          [alt]="'No image available'"
+          class="fallback-image"
         />
+
         <div class="content">
           <div class="tags">
             <span class="featured">FEATURED</span>
@@ -35,8 +60,9 @@
           <div class="description">{{ property.propertydetails }}</div>
           <div class="actions">
             <button class="edit" (click)="enableEdit(property)">Edit</button>
-            <button class="delete" (click)="deleteProperty(property.id)">Delete</button>
-            <!-- <button class="view-details">View Details</button> -->
+            <button class="delete" (click)="deleteProperty(property.id)">
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -46,15 +72,30 @@
         <form (ngSubmit)="saveProperty(property)">
           <div class="form-group">
             <label for="propertyName">Property Name</label>
-            <input id="propertyName" [(ngModel)]="property.propertyName" name="propertyName" required />
+            <input
+              id="propertyName"
+              [(ngModel)]="property.propertyName"
+              name="propertyName"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="propertyType">Property Type</label>
-            <input id="propertyType" [(ngModel)]="property.propertyType" name="propertyType" required />
+            <input
+              id="propertyType"
+              [(ngModel)]="property.propertyType"
+              name="propertyType"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="price">Price</label>
-            <input id="price" [(ngModel)]="property.price" name="price" required />
+            <input
+              id="price"
+              [(ngModel)]="property.price"
+              name="price"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="city">City</label>
@@ -62,14 +103,26 @@
           </div>
           <div class="form-group">
             <label for="status">Status</label>
-            <input id="status" [(ngModel)]="property.status" name="status" required />
+            <input
+              id="status"
+              [(ngModel)]="property.status"
+              name="status"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="propertydetails">Details</label>
-            <textarea id="propertydetails" [(ngModel)]="property.propertydetails" name="propertydetails" required></textarea>
+            <textarea
+              id="propertydetails"
+              [(ngModel)]="property.propertyDetails"
+              name="propertydetails"
+              required
+            ></textarea>
           </div>
           <div class="form-actions">
-            <button type="button" class="cancel" (click)="cancelEdit(property)">Cancel</button>
+            <button type="button" class="cancel" (click)="cancelEdit(property)">
+              Cancel
+            </button>
             <button type="submit" class="save">Save</button>
           </div>
         </form>
