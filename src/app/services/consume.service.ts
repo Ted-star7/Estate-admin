@@ -46,17 +46,17 @@ export class ConsumeService {
       );
   }
 
-  // public putRequest(endpoint: string, data: any, token: string | null): Observable<any> {
-  //   const headers = new HttpHeaders({
-  //     "Authorization": `Bearer ${token}`,
-  //     "Content-type": "application/json",
-  //   });
+  public putMethod(endpoint: string, data: any, token: string | null): Observable<any> {
+    const headers = new HttpHeaders({
+      "Authorization": `Bearer ${token}`,
+      "Content-type": "application/json",
+    });
 
-  //   return this.httpClient.put(`${this.url}${endpoint}`, JSON.stringify(data), { headers })
-  //     .pipe(
-  //       catchError(this.handleError)
-  //     );
-  // }
+    return this.httpClient.put(`${this.url}${endpoint}`, JSON.stringify(data), { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
   public putRequest(endpoint: string, data: any): Observable<any> {
     // No headers are needed for multipart/form-data; the browser will set them automatically

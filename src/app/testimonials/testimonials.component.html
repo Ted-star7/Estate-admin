@@ -30,8 +30,9 @@
     </div>
 
     <button type="submit" [disabled]="loading || testimonialForm.invalid">
-      {{ loading ? 'Submitting...' : 'Submit Testimonial' }}
+      {{ loading ? 'Submitting...' : (isEditing ? 'Update Testimonial' : 'Submit Testimonial') }}
     </button>
+    <button type="button" *ngIf="isEditing" (click)="resetForm()" class="cancel-button">Cancel</button>
   </form>
 
   <!-- Testimonial List -->
