@@ -88,7 +88,7 @@ export class PropertiesComponent {
     console.log('Submitting property details:', this.propertyDetails);
 
     const formData = new FormData();
-    formData.append('property', JSON.stringify(this.propertyDetails)); // Send property as JSON string
+    formData.append('property', JSON.stringify(this.propertyDetails)); 
 
     this.selectedFiles.forEach((file) => {
       formData.append('images', file, file.name);

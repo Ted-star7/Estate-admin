@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConsumeService } from '../services/consume.service';
 import { SessionService } from '../services/session.service';
@@ -9,7 +9,7 @@ import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-testimonials',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule, NgFor, NgIf, HttpClientModule],
   templateUrl: './testimonials.component.html',
   styleUrls: ['./testimonials.component.css'],
 })

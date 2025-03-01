@@ -51,7 +51,7 @@ export class SessionService {
     return isPlatformBrowser(this.platformId) ? sessionStorage.getItem('token') : null;
   }
 
-  public getuserName(): string | null {
+  public getuserName(p0: string): string | null {
     return isPlatformBrowser(this.platformId) ? sessionStorage.getItem('userName') : null;
   }
 

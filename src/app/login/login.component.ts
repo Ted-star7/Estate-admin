@@ -75,7 +75,7 @@ export class LoginComponent {
           // Save session data
           this.sessionService.saveToken(token);
           this.sessionService.saveUserId(id);
-          this.sessionService.saverole(role);
+          // this.sessionService.saverole(role);
           this.sessionService.saveuserName(userName);
 
           this.snackBar.open('Login Successful', 'Close', { duration: 3000 });
