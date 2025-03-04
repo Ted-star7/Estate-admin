@@ -1,0 +1,95 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #F2F2F2;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #F25C05;
+  text-align: center;
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+th {
+  background-color: #F2EED8;
+  color: #D98D62;
+}
+
+td {
+  color: #333;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #D98D62;
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.delete {
+  background-color: #EF4444;
+  color: white;
+}
+
+.reply-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.reply-input {
+  width: 60%;
+  padding: 8px;
+  border: 1px solid #D98D62;
+  border-radius: 4px;
+}
+
+.reply-btn {
+  background-color: #F25C05;
+  color: white;
+  margin-left: 10px;
+}

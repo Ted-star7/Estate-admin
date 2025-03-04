@@ -9,6 +9,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ContactComponent } from './contact/contact.component';
 import { PropertiesComponent } from './properties/properties.component';
 import { ViewPropertiesComponent } from './view-properties/view-properties.component';
+import { SiteVisitComponent } from './site-visit/site-visit.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -21,5 +22,6 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent},
   { path: 'properties', component: PropertiesComponent},
   { path: 'view-properties', component: ViewPropertiesComponent},
+  { path: 'site-visit', component: SiteVisitComponent},
   { path: '**', redirectTo: '' }, // Fallback
 ];

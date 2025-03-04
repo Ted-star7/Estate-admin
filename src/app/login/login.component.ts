@@ -19,7 +19,7 @@ export class LoginComponent {
   email: string | undefined;
   userName: string | undefined;
   password: string | undefined;
-  role: string | undefined;
+  // role: string | undefined;
   showPassword: boolean = false; 
   isPasswordVisible: any;
   loading: boolean = false
@@ -41,7 +41,7 @@ export class LoginComponent {
   resetform(): void {
     this.email = '';
     this.password = '';
-    this.role = '';
+    // this.role = '';
     this.userName = '';
   }
   onLogin(): void {
@@ -49,7 +49,7 @@ export class LoginComponent {
     const formData = {
       email: this.email,
       password: this.password,
-      role: this.role,
+      // role: this.role,
       userName: this.userName,
     };
 
@@ -67,7 +67,7 @@ export class LoginComponent {
           parsedResponse?.status?.toLowerCase() === 'success' &&
           parsedResponse?.token &&
           parsedResponse?.id !== undefined &&
-          parsedResponse?.role &&
+          // parsedResponse?.role &&
           parsedResponse?.userName
         ) {
           const { token, id, role, userName } = parsedResponse;
