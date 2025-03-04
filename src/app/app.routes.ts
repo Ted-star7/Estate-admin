@@ -10,18 +10,20 @@ import { ContactComponent } from './contact/contact.component';
 import { PropertiesComponent } from './properties/properties.component';
 import { ViewPropertiesComponent } from './view-properties/view-properties.component';
 import { SiteVisitComponent } from './site-visit/site-visit.component';
+import { AuthGuard } from './services/auth.service';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'signup', component: SignupComponent},
-  { path: 'resetpassword', component: ResetPasswordComponent},
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'sidebar', component: SidebarComponent},
-  { path: 'admin', component: AdminComponent},
-  { path: 'testimonials', component: TestimonialsComponent},
-  { path: 'contact', component: ContactComponent},
-  { path: 'properties', component: PropertiesComponent},
-  { path: 'view-properties', component: ViewPropertiesComponent},
-  { path: 'site-visit', component: SiteVisitComponent},
+  { path: 'resetpassword', component: ResetPasswordComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'sidebar', component: SidebarComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'testimonials', component: TestimonialsComponent, canActivate: [AuthGuard] },
+  { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
+  { path: 'properties', component: PropertiesComponent, canActivate: [AuthGuard] },
+  { path: 'view-properties', component: ViewPropertiesComponent, canActivate: [AuthGuard] },
+  { path: 'site-visit', component: SiteVisitComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }, // Fallback
+  
 ];
