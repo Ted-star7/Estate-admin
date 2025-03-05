@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ViewPropertiesComponent implements OnInit {
   properties: any[] = [];
+  filteredProperties: any[] = [];
   loading: boolean = false;
 
   constructor(
@@ -28,21 +29,33 @@ export class ViewPropertiesComponent implements OnInit {
     this.fetchProperties();
   }
 
-
   fetchProperties(): void {
     this.loading = true;
     this.consumeService.getRequest('/api/open/properties', null).subscribe({
       next: (response: any) => {
-        this.properties = response.map((property: any) => ({ ...property, isEditing: false })); // Add isEditing flag
+        this.properties = response.map((property: any) => ({ ...property, isEditing: false }));
+        this.filteredProperties = [...this.properties]; // Initialize filteredProperties
         console.log('Properties fetched successfully:', this.properties);
         this.loading = false;
       },
       error: (error) => {
         console.error('Error fetching properties:', error);
         this.snackBar.open('Error fetching properties. Please try again.', 'Close', { duration: 5000 });
-        this.loading = false; // Hide loading state
+        this.loading = false;
       },
     });
+  }
+
+  // Filter properties by type
+  onFilterChange(event: any): void {
+    const filterValue = event.target.value;
+    if (filterValue) {
+      this.filteredProperties = this.properties.filter(
+        (property) => property.propertyType === filterValue
+      );
+    } else {
+      this.filteredProperties = [...this.properties]; // Show all properties if no filter is selected
+    }
   }
 
   // Enable edit mode for a property
@@ -57,25 +70,20 @@ export class ViewPropertiesComponent implements OnInit {
 
   // Save updated property details
   saveProperty(property: any): void {
-    // Create a FormData object
     const formData = new FormData();
-
-    // Append the property object as a JSON string
     formData.append('property', JSON.stringify(property));
 
-    // Append images (if any)
     if (property.images && property.images.length > 0) {
       property.images.forEach((image: File, index: number) => {
-        formData.append('images', image); // Append each image file
+        formData.append('images', image);
       });
     }
 
-    // Send the PUT request
     this.consumeService.putRequest(`/api/open/properties/${property.id}`, formData).subscribe(
       (response) => {
         this.snackBar.open('Property updated successfully', 'Close', { duration: 3000 });
         property.isEditing = false;
-        this.fetchProperties(); // Refresh the property list
+        this.fetchProperties();
       },
       (error) => {
         console.error('Error updating property:', error);
@@ -86,24 +94,15 @@ export class ViewPropertiesComponent implements OnInit {
 
   // Delete property
   deleteProperty(propertyId: string): void {
-    // const token = this.sessionService.getToken();
-    // if (!token) {
-    //   this.snackBar.open('Authentication required', 'Close', { duration: 3000 });
-    //   return;
-    // }
-
-    // Show a confirmation snackbar
     const snackBarRef = this.snackBar.open('Are you sure you want to delete this property?', 'Delete', {
       duration: 5000,
     });
 
-    // Subscribe to the snackbar action (e.g., when the user clicks "Delete")
     snackBarRef.onAction().subscribe(() => {
-      // User confirmed deletion
       this.consumeService.deleteRequest(`/api/open/properties/${propertyId}`, null).subscribe(
         (response) => {
           this.snackBar.open('Property deleted successfully', 'Close', { duration: 3000 });
-          this.fetchProperties(); // Refresh the property list
+          this.fetchProperties();
         },
         (error) => {
           console.error('Error deleting property:', error);
@@ -112,31 +111,8 @@ export class ViewPropertiesComponent implements OnInit {
       );
     });
 
-    // Optional: Handle when the snackbar is dismissed without action
     snackBarRef.afterDismissed().subscribe(() => {
       console.log('Deletion canceled');
     });
-  }
-
-  // Sort properties
-  onSortChange(event: any): void {
-    const sortBy = event.target.value;
-    switch (sortBy) {
-      case 'priceLowToHigh':
-        this.properties.sort((a, b) => a.price - b.price);
-        break;
-      case 'priceHighToLow':
-        this.properties.sort((a, b) => b.price - a.price);
-        break;
-      case 'location':
-        this.properties.sort((a, b) => a.location.localeCompare(b.location));
-        break;
-      case 'type':
-        this.properties.sort((a, b) => a.propertyType.localeCompare(b.propertyType));
-        break;
-      default:
-        this.fetchProperties(); // Reset to default order
-        break;
-    }
   }
 }

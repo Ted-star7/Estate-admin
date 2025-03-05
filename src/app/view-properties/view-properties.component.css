@@ -26,12 +26,12 @@ body {
   color: #595959;
 }
 
-.header .sort {
+.header .filter {
   font-size: 14px;
   color: #595959;
 }
 
-.header .sort select {
+.header .filter select {
   padding: 8px;
   border: 1px solid #f2935c;
   border-radius: 5px;
@@ -41,7 +41,7 @@ body {
   transition: all 0.3s ease;
 }
 
-.header .sort select:hover {
+.header .filter select:hover {
   border-color: #f25c05;
 }
 
@@ -149,16 +149,6 @@ body {
 .card .actions .delete:hover {
   background-color: #ff0000;
   color: #fff;
-}
-
-.card .actions .view-details {
-  background-color: #f25c05;
-  color: #fff;
-  border: none;
-}
-
-.card .actions .view-details:hover {
-  background-color: #f2762e;
 }
 
 /* Edit Form */

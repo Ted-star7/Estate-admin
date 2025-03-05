@@ -13,14 +13,14 @@ body {
 /* Container */
 .container {
   display: flex;
-  max-width: 1200px;
+  max-width: 900px;
   width: 100%;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   flex-wrap: wrap;
-  /* Allow stacking on smaller screens */
+  margin: 0 auto;
 }
 
 /* Image Section (Left) */
@@ -183,6 +183,7 @@ button:disabled {
 @media (max-width: 1024px) {
   .container {
     flex-direction: column;
+    max-width: 80%;
   }
 
   .image-section {
@@ -199,7 +200,7 @@ button:disabled {
     flex-direction: column;
     border-radius: 0;
     box-shadow: none;
-    /* position: relative; */
+    max-width: 95%;
   }
 
   .image-section {
@@ -223,5 +224,14 @@ button:disabled {
   .image-text {
     max-width: 100%;
     text-align: center;
+  }
+}
+
+/* Ensure centering on larger screens */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

@@ -2,14 +2,15 @@
   <!-- Header Section -->
   <div class="header">
     <h1>{{ properties.length }} Properties</h1>
-    <div class="sort">
-      <label for="sort">Sort by:</label>
-      <select id="sort" (change)="onSortChange($event)">
-        <option value="default">Default Order</option>
-        <option value="priceLowToHigh">Price: Low to High</option>
-        <option value="priceHighToLow">Price: High to Low</option>
-        <option value="location">Location</option>
-        <option value="type">Type</option>
+    <div class="filter">
+      <label for="filter">Filter by Type:</label>
+      <select id="filter" (change)="onFilterChange($event)">
+        <option value="">All Types</option>
+        <option>Apartment</option>
+        <option>Bungalow</option>
+        <option>Commercial</option>
+        <option>Land</option>
+        <option>Other</option>
       </select>
     </div>
   </div>
@@ -22,7 +23,7 @@
   <!-- Property Grid -->
   <div class="grid" *ngIf="!loading">
     <!-- Property Card (Repeated for each property) -->
-    <div class="card" *ngFor="let property of properties">
+    <div class="card" *ngFor="let property of filteredProperties">
       <!-- Display Mode -->
       <div *ngIf="!property.isEditing">
         <!-- Image Display Logic -->
