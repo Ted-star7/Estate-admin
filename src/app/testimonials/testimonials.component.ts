@@ -16,9 +16,15 @@ import { NgFor, NgIf } from '@angular/common';
 export class TestimonialsComponent implements OnInit {
   testimonialForm: FormGroup;
   testimonials: any[] = [];
+  paginatedTestimonials: any[] = [];
   loading = false;
   isEditing = false; // Track if in edit mode
-  currentTestimonialId: string | null = null; // Track the testimonial being edited
+  currentTestimonialId: string | null = null;
+
+  // Pagination Variables
+  currentPage = 1;
+  pageSize = 5;
+  totalPages = 1;
 
   constructor(
     private fb: FormBuilder,
@@ -38,6 +44,23 @@ export class TestimonialsComponent implements OnInit {
     this.loadTestimonials();
   }
 
+  // Update Paginated Testimonials
+  updatePaginatedTestimonials() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.paginatedTestimonials = this.testimonials.slice(startIndex, startIndex + this.pageSize);
+    this.totalPages = Math.ceil(this.testimonials.length / this.pageSize);
+  }
+
+  // Change Page
+  changePage(next: boolean) {
+    if (next && this.currentPage < this.totalPages) {
+      this.currentPage++;
+    } else if (!next && this.currentPage > 1) {
+      this.currentPage--;
+    }
+    this.updatePaginatedTestimonials();
+  }
+
   // Load Testimonials from API
   loadTestimonials() {
     this.consumeService
@@ -45,6 +68,7 @@ export class TestimonialsComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           this.testimonials = response.data;
+          this.updatePaginatedTestimonials();
         },
         error: (error) => {
           console.error('Error loading testimonials:', error);

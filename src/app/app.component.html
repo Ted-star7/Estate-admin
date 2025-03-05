@@ -1,6 +1,6 @@
 <div class="container" [class.sidebar-open]="isSidebarOpen">
   <!-- Hamburger Menu Button for Mobile -->
-  <button class="hamburger" (click)="toggleSidebar()">
+  <button class="hamburger" (click)="toggleSidebar()" *ngIf="!hideSidebar">
     <i class="fas fa-bars"></i>
   </button>
 

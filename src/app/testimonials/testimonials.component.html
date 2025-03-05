@@ -37,7 +37,7 @@
 
   <!-- Testimonial List -->
   <div class="testimonial-list">
-    <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+    <div class="testimonial-card" *ngFor="let testimonial of paginatedTestimonials">
       <div class="testimonial-content">
         <p class="testimonial-text">{{ testimonial.testimonial }}</p>
         <p class="testimonial-author">- {{ testimonial.name }}</p>
@@ -50,5 +50,12 @@
         <button class="delete-button" (click)="onDelete(testimonial)">Delete</button>
       </div>
     </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="changePage(false)" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="changePage(true)" [disabled]="currentPage === totalPages">Next</button>
   </div>
 </div>

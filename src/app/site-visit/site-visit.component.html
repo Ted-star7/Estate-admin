@@ -1,6 +1,14 @@
 <div class="container">
   <h2>Request Visit Information</h2>
-  <div class="table-container">
+
+  <!-- Tabs for Recent and Archived Site Visits -->
+  <div class="tabs">
+    <button (click)="fetchSiteVisits()" class="tab-button">Recent Site Visits</button>
+    <button (click)="fetchArchivedSiteVisits()" class="tab-button">Archived Site Visits</button>
+  </div>
+
+  <!-- Recent Site Visits Table -->
+  <div *ngIf="!showArchivedVisits" class="table-container">
     <table>
       <thead>
         <tr>
@@ -13,26 +21,23 @@
       </thead>
       <tbody>
         <tr *ngFor="let visit of siteVisits">
-          <td>
-            <input *ngIf="editingId === visit.id" [(ngModel)]="visit.name" class="edit-input"/>
+          <td data-label="Name">
+            <input *ngIf="editingId === visit.id" [(ngModel)]="visit.name" class="edit-input" />
             <span *ngIf="editingId !== visit.id">{{ visit.name }}</span>
           </td>
-          <td>
-            <input *ngIf="editingId === visit.id" [(ngModel)]="visit.phone" class="edit-input"/>
+          <td data-label="Phone">
+            <input *ngIf="editingId === visit.id" [(ngModel)]="visit.phone" class="edit-input" />
             <span *ngIf="editingId !== visit.id">{{ visit.phone }}</span>
           </td>
-          <td>
-            <input *ngIf="editingId === visit.id" [(ngModel)]="visit.email" class="edit-input"/>
+          <td data-label="Email">
+            <input *ngIf="editingId === visit.id" [(ngModel)]="visit.email" class="edit-input" />
             <span *ngIf="editingId !== visit.id">{{ visit.email }}</span>
           </td>
-          <td>
-            <input *ngIf="editingId === visit.id" [(ngModel)]="visit.message" class="edit-input"/>
+          <td data-label="Message">
+            <input *ngIf="editingId === visit.id" [(ngModel)]="visit.message" class="edit-input" />
             <span *ngIf="editingId !== visit.id">{{ visit.message }}</span>
           </td>
-          <td class="actions">
-            <!-- <button *ngIf="editingId !== visit.id" (click)="startEditing(visit.id)" aria-label="Edit">
-              <i class="fas fa-edit"></i> Edit
-            </button> -->
+          <td class="actions" data-label="Actions">
             <button *ngIf="editingId === visit.id" (click)="saveEdit(visit.id, visit)" aria-label="Save">
               <i class="fas fa-save"></i> Save
             </button>
@@ -48,11 +53,35 @@
     </table>
   </div>
 
+  <!-- Archived Site Visits Table -->
+  <div *ngIf="showArchivedVisits" class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Message</th>
+          <th>Replied At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visit of archivedVisits">
+          <td data-label="Name">{{ visit.name }}</td>
+          <td data-label="Phone">{{ visit.phone }}</td>
+          <td data-label="Email">{{ visit.email }}</td>
+          <td data-label="Message">{{ visit.message }}</td>
+          <td data-label="Replied At">{{ visit.repliedAt | date: 'medium' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- Reply Section -->
   <div class="reply-container" *ngIf="selectedVisitId !== null">
     <input
       type="text"
-      [(ngModel)]="replyMessage[selectedVisitId]"
+      [(ngModel)]="message[selectedVisitId]"
       placeholder="Type your reply..."
       class="reply-input"
       aria-label="Reply message input"

@@ -1,90 +1,55 @@
 <div class="container">
   <!-- Welcome Message -->
-  <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-    <h1 class="text-2xl font-bold">Welcome, {{ username }}!</h1>
-    <p class="text-gray-600">
-      Here's a quick overview of crowne estates.
-    </p>
+  <div class="welcome-message">
+    <h1>Welcome, {{ username }}!</h1>
+    <p>Here's a quick overview of crowne estates.</p>
   </div>
 
   <!-- Key Metrics -->
- <!-- Key Metrics -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-  <!-- Total Properties -->
-  <div 
-    class="bg-white p-6 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition"
-    (click)="navigateTo('/view-properties')">
-    <h2 class="text-xl font-bold">Total Properties</h2>
-    <p class="text-3xl font-semibold text-blue-500">
-      {{ loading ? 'Loading...' : totalProperties }}
-    </p>
+  <div class="metrics-grid">
+    <!-- Total Properties -->
+    <div class="metric-card" (click)="navigateTo('/view-properties')">
+      <h2>Total Properties</h2>
+      <p class="text-blue">{{ loading ? 'Loading...' : totalProperties }}</p>
+    </div>
+
+    <!-- Total Apartments -->
+    <div class="metric-card" (click)="navigateTo('/view-properties')">
+      <h2>Total Apartments</h2>
+      <p class="text-green">{{ loading ? 'Loading...' : residentialProperties }}</p>
+    </div>
+
+    <!-- Number of Lands -->
+    <div class="metric-card" (click)="navigateTo('/view-properties')">
+      <h2>Number of Lands</h2>
+      <p class="text-purple">{{ loading ? 'Loading...' : landProperties }}</p>
+    </div>
+
+    <!-- New Messages -->
+    <div class="metric-card" (click)="navigateTo('/site-visit')">
+      <h2>New Messages</h2>
+      <p class="text-red">{{ loading ? 'Loading...' : newNotifications }}</p>
+    </div>
   </div>
 
-  <!-- Total Apartments -->
-  <div 
-    class="bg-white p-6 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition"
-    (click)="navigateTo('/view-properties')">
-    <h2 class="text-xl font-bold">Total Apartments</h2>
-    <p class="text-3xl font-semibold text-green-500">
-      {{ loading ? 'Loading...' : residentialProperties }}
-    </p>
+  <!-- Recent Activity Feed -->
+  <div class="activity-feed">
+    <h2>Recent Activity</h2>
+    <ul>
+      <li>
+        <img src="https://storage.googleapis.com/a1aa/image/s4k1XCFg0LT8J6NVDFZXKQk5nbmcI20K1F00Rq-A7WQ.jpg" alt="Site Visit Reply" />
+        <div>
+          <p class="activity-title">Site Visit Message Replied</p>
+          <p class="activity-description">{{ recentSiteVisitReply || 'Loading...' }}</p>
+        </div>
+      </li>
+      <li>
+        <img src="https://storage.googleapis.com/a1aa/image/FN3uSNd7QOip_xMlH9r_Nw_Euab74GRdSfX-y8ehncc.jpg" alt="Contact Reply" />
+        <div>
+          <p class="activity-title">Contact Message Replied</p>
+          <p class="activity-description">{{ recentContactReply || 'Loading...' }}</p>
+        </div>
+      </li>
+    </ul>
   </div>
-
-  <!-- Number of Lands -->
-  <div 
-    class="bg-white p-6 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition"
-    (click)="navigateTo('/view-properties')">
-    <h2 class="text-xl font-bold">Number of Lands</h2>
-    <p class="text-3xl font-semibold text-purple-500">
-      {{ loading ? 'Loading...' : landProperties }}
-    </p>
-  </div>
-
-  <!-- New Messages -->
-  <div 
-    class="bg-white p-6 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition"
-    (click)="navigateTo('/site-visit')">
-    <h2 class="text-xl font-bold">New Messages</h2>
-    <p class="text-3xl font-semibold text-red-500">
-      {{ loading ? 'Loading...' : newNotifications }}
-    </p>
-  </div>
-</div>
-
-
-
- <!-- Recent Activity Feed -->
-<div class="bg-white p-6 rounded-lg shadow-md">
-  <h2 class="text-xl font-bold mb-4">Recent Activity</h2>
-  <ul class="space-y-4">
-    <li class="flex items-center">
-      <img
-        alt="Icon representing a site visit message reply"
-        class="w-12 h-12 rounded-full mr-4"
-        height="50"
-        src="https://storage.googleapis.com/a1aa/image/s4k1XCFg0LT8J6NVDFZXKQk5nbmcI20K1F00Rq-A7WQ.jpg"
-        width="50"
-      />
-      <div>
-        <p class="font-semibold">Site Visit Message Replied</p>
-        <p class="text-gray-600">{{ recentSiteVisitReply || 'Loading...' }}</p>
-      </div>
-    </li>
-    
-    <li class="flex items-center">
-      <img
-        alt="Icon representing a contact message reply"
-        class="w-12 h-12 rounded-full mr-4"
-        height="50"
-        src="https://storage.googleapis.com/a1aa/image/FN3uSNd7QOip_xMlH9r_Nw_Euab74GRdSfX-y8ehncc.jpg"
-        width="50"
-      />
-      <div>
-        <p class="font-semibold">Contact Message Replied</p>
-        <p class="text-gray-600">{{ recentContactReply || 'Loading...' }}</p>
-      </div>
-    </li>
-  </ul>
-</div>
-
 </div>

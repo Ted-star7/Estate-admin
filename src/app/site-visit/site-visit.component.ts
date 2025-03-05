@@ -10,22 +10,29 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   standalone: true,
   imports: [CommonModule, FormsModule, MatSnackBarModule],
   templateUrl: './site-visit.component.html',
-  styleUrls: ['./site-visit.component.css']
+  styleUrls: ['./site-visit.component.css'],
 })
 export class SiteVisitComponent implements OnInit {
   siteVisits: any[] = [];
+  archivedVisits: any[] = [];
   editingId: number | null = null;
   selectedVisitId: number | null = null;
-  replyMessage: { [key: number]: string } = {};
-  token: string | null =sessionStorage.getItem('token');
+  message: { [key: number]: string } = {};
+  token: string | null = sessionStorage.getItem('token');
+  showArchivedVisits: boolean = false;
 
-  constructor(private consumeService: ConsumeService, private snackBar: MatSnackBar, private sessionService: SessionService) { }
+  constructor(
+    private consumeService: ConsumeService,
+    private snackBar: MatSnackBar,
+    private sessionService: SessionService
+  ) { }
 
   ngOnInit(): void {
     this.fetchSiteVisits();
   }
 
   fetchSiteVisits(): void {
+    this.showArchivedVisits = false;
     this.consumeService.getRequest('/api/open/site-visits', this.token).subscribe({
       next: (response) => {
         if (response.status === 'success') {
@@ -36,11 +43,21 @@ export class SiteVisitComponent implements OnInit {
     });
   }
 
+  fetchArchivedSiteVisits(): void {
+    this.showArchivedVisits = true;
+    this.consumeService.getRequest('/api/open/site-visits/archive', this.token).subscribe({
+      next: (response) => {
+        this.archivedVisits = response.data || [];
+      },
+      error: () => this.showNotification('Error fetching archived site visits', 'error'),
+    });
+  }
+
   deleteSiteVisit(id: number): void {
     if (confirm('Are you sure you want to delete this site visit?')) {
       this.consumeService.deleteRequest(`/api/open/site-visits/${id}`, this.token).subscribe({
         next: () => {
-          this.siteVisits = this.siteVisits.filter(visit => visit.id !== id);
+          this.siteVisits = this.siteVisits.filter((visit) => visit.id !== id);
           this.showNotification('Site visit deleted successfully', 'success');
         },
         error: () => this.showNotification('Failed to delete site visit', 'error'),
@@ -68,17 +85,17 @@ export class SiteVisitComponent implements OnInit {
   }
 
   sendReply(id: number): void {
-    if (!this.replyMessage[id]?.trim()) {
+    if (!this.message[id]?.trim()) {
       this.showNotification('Please enter a reply message', 'warning');
       return;
     }
 
-    const payload = { reply: this.replyMessage[id] };
+    const payload = { reply: this.message[id] };
 
     this.consumeService.postRequest(`/api/open/site-visits/${id}/reply`, payload, this.token).subscribe({
       next: () => {
         this.showNotification('Reply sent successfully!', 'success');
-        this.replyMessage[id] = '';
+        this.message[id] = '';
         this.selectedVisitId = null;
       },
       error: (error) => {

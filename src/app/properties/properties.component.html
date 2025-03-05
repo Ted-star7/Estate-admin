@@ -38,6 +38,7 @@
             placeholder="Enter property name"
             [(ngModel)]="propertyDetails.propertyName"
             name="propertyName"
+            required
           />
         </div>
 
@@ -46,6 +47,7 @@
           <select
             [(ngModel)]="propertyDetails.propertyType"
             name="propertyType"
+            required
           >
             <option>Apartment</option>
             <option>Bungalow</option>
@@ -62,7 +64,31 @@
             placeholder="Enter price"
             [(ngModel)]="propertyDetails.price"
             name="price"
+            required
           />
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input
+            type="text"
+            placeholder="Enter city"
+            [(ngModel)]="propertyDetails.city"
+            name="city"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select
+            [(ngModel)]="propertyDetails.status"
+            name="parkingSpace"
+            required
+          >
+            <option>Available</option>
+            <option>Sold</option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -72,6 +98,7 @@
             placeholder="Enter location"
             [(ngModel)]="propertyDetails.location"
             name="location"
+            required
           />
         </div>
 
@@ -82,6 +109,7 @@
             placeholder="Enter square feet"
             [(ngModel)]="propertyDetails.squareFeet"
             name="squareFeet"
+            required
           />
         </div>
 
@@ -92,6 +120,7 @@
             placeholder="Enter number of bedrooms"
             [(ngModel)]="propertyDetails.bedrooms"
             name="bedrooms"
+            required
           />
         </div>
 
@@ -102,6 +131,7 @@
             placeholder="Enter number of bathrooms"
             [(ngModel)]="propertyDetails.bathrooms"
             name="bathrooms"
+            required
           />
         </div>
 
@@ -110,6 +140,7 @@
           <select
             [(ngModel)]="propertyDetails.parkingSpace"
             name="parkingSpace"
+            required
           >
             <option>Available</option>
             <option>Not Available</option>
@@ -123,6 +154,7 @@
           placeholder="Enter Property Details"
           [(ngModel)]="propertyDetails.propertyDetails"
           name="propertyDetails"
+          required
         ></textarea>
       </div>
 

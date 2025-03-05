@@ -3,13 +3,12 @@ body {
   background-color: #f3f4f6;
   font-family: 'Arial', sans-serif;
   margin: 0;
-
   padding: 0;
 }
 
 .container {
   width: 100%;
-  /* Full width */
+  max-width: 1200px;
   margin: 0 auto;
   padding: 24px;
 }
@@ -39,20 +38,6 @@ body {
 .breadcrumb .active {
   color: #1f2937;
   font-weight: bold;
-}
-
-.add-property-btn {
-  background-color: #f97316;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.add-property-btn:hover {
-  background-color: #e65a00;
 }
 
 /* Property Form Card */
@@ -116,9 +101,7 @@ body {
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  /* Wider grid */
   gap: 24px;
-  /* Increased gap for better spacing */
   margin-bottom: 24px;
 }
 
@@ -138,7 +121,6 @@ body {
 .form-group textarea {
   border: 1px solid #d1d5db;
   padding: 12px;
-  /* Increased padding for better spacing */
   border-radius: 6px;
   font-size: 14px;
   transition: border-color 0.3s;
@@ -149,25 +131,6 @@ body {
 .form-group textarea:focus {
   border-color: #f97316;
   outline: none;
-}
-
-.form-group .input-group {
-  display: flex;
-  align-items: center;
-}
-
-.form-group .input-group span {
-  background-color: #f3f4f6;
-  padding: 12px;
-  border: 1px solid #d1d5db;
-  border-right: none;
-  border-radius: 6px 0 0 6px;
-  color: #6b7280;
-}
-
-.form-group .input-group input {
-  border-left: none;
-  border-radius: 0 6px 6px 0;
 }
 
 /* Form Actions */
@@ -181,21 +144,11 @@ body {
 .form-actions button,
 .form-actions .view-properties-btn {
   padding: 12px 24px;
-  /* Increased padding for better spacing */
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
-}
-
-.form-actions .cancel-btn {
-  background-color: #e5e7eb;
-  color: #6b7280;
-}
-
-.form-actions .cancel-btn:hover {
-  background-color: #d1d5db;
 }
 
 .form-actions .add-btn {
@@ -218,6 +171,20 @@ body {
   background-color: #111827;
 }
 
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.loading-spinner i {
+  font-size: 20px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .form-grid {
@@ -232,5 +199,17 @@ body {
   .form-actions .view-properties-btn {
     width: 100%;
     margin-bottom: 12px;
+  }
+
+  .upload-box {
+    padding: 16px;
+  }
+
+  .upload-box i {
+    font-size: 36px;
+  }
+
+  .upload-box p {
+    font-size: 14px;
   }
 }

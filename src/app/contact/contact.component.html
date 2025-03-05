@@ -5,8 +5,13 @@
     <h2 class="messages-title">Messages</h2>
 
     <!-- Search Input -->
-    <input type="text" [(ngModel)]="searchText" (input)="searchMessages()"
-      class="search-input" placeholder="Search by name, email, or phone...">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      (input)="searchMessages()"
+      class="search-input"
+      placeholder="Search by name, email, or phone..."
+    />
 
     <!-- Tabs for Recent and Past Messages -->
     <div class="tabs">
@@ -14,7 +19,7 @@
       <button (click)="fetchPastMessages()" class="tab-button">Past Messages</button>
     </div>
 
-    <!-- Recent Messages Table -->
+    <!-- Recent Messages Table (Desktop) -->
     <table *ngIf="!showPastMessages" class="messages-table">
       <thead>
         <tr>
@@ -36,7 +41,33 @@
       </tbody>
     </table>
 
-    <!-- Past Messages Table -->
+    <!-- Recent Messages Cards (Mobile) -->
+    <div *ngIf="!showPastMessages" class="messages-cards">
+      <div *ngFor="let message of paginatedMessages; let i = index" class="message-card" (click)="selectMessage(message)">
+        <div class="card-row">
+          <span class="card-label">#</span>
+          <span class="card-value">{{ (currentPage - 1) * pageSize + i + 1 }}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Name</span>
+          <span class="card-value">{{ message.firstName }} {{ message.lastName }}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Email</span>
+          <span class="card-value">{{ message.email }}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Phone</span>
+          <span class="card-value">{{ message.phoneNumber }}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Message</span>
+          <span class="card-value">{{ message.message | slice:0:50 }}...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Past Messages Table (Desktop) -->
     <table *ngIf="showPastMessages" class="messages-table">
       <thead>
         <tr>
@@ -57,6 +88,32 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- Past Messages Cards (Mobile) -->
+    <div *ngIf="showPastMessages" class="messages-cards">
+      <div *ngFor="let message of paginatedMessages; let i = index" class="message-card" (click)="viewPastMessage(message)">
+        <div class="card-row">
+          <span class="card-label">#</span>
+          <span class="card-value">{{ (currentPage - 1) * pageSize + i + 1 }}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Email</span>
+          <span class="card-value">{{ message.clientEmail }}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Client Message</span>
+          <span class="card-value">{{ message.clientMessage | slice:0:50 }}...</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Admin Reply</span>
+          <span class="card-value">{{ message.adminReply | slice:0:50 }}...</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Replied At</span>
+          <span class="card-value">{{ message.repliedAt | date: 'medium' }}</span>
+        </div>
+      </div>
+    </div>
 
     <!-- Pagination -->
     <div class="pagination">

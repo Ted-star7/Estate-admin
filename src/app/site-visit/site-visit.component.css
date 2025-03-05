@@ -1,6 +1,7 @@
+/* General Styling */
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   margin: 0;
   padding: 0;
 }
@@ -16,10 +17,33 @@ body {
 }
 
 h2 {
-  color: #F25C05;
+  color: #f25c05;
   text-align: center;
 }
 
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  padding: 8px 16px;
+  background-color: #f25c05;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.tab-button:hover {
+  background-color: #d98d62;
+}
+
+/* Table Styling */
 .table-container {
   overflow-x: auto;
   border-radius: 8px;
@@ -38,21 +62,23 @@ td {
 }
 
 th {
-  background-color: #F2EED8;
-  color: #D98D62;
+  background-color: #f2eed8;
+  color: #d98d62;
 }
 
 td {
   color: #333;
 }
 
+/* Input Fields */
 .edit-input {
   width: 100%;
   padding: 6px;
-  border: 1px solid #D98D62;
+  border: 1px solid #d98d62;
   border-radius: 4px;
 }
 
+/* Action Buttons */
 .actions {
   display: flex;
   gap: 10px;
@@ -71,10 +97,16 @@ button:hover {
 }
 
 .delete {
-  background-color: #EF4444;
+  background-color: #ef4444;
   color: white;
 }
 
+.reply-btn {
+  background-color: #f25c05;
+  color: white;
+}
+
+/* Reply Section */
 .reply-container {
   display: flex;
   align-items: center;
@@ -82,14 +114,76 @@ button:hover {
 }
 
 .reply-input {
-  width: 60%;
+  flex: 1;
   padding: 8px;
-  border: 1px solid #D98D62;
+  border: 1px solid #d98d62;
   border-radius: 4px;
 }
 
 .reply-btn {
-  background-color: #F25C05;
-  color: white;
   margin-left: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 10px;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+  }
+
+  td:last-child {
+    border-bottom: none;
+  }
+
+  td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #d98d62;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .reply-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .reply-input {
+    width: 100%;
+  }
+
+  .reply-btn {
+    width: 100%;
+  }
 }

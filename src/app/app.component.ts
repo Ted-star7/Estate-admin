@@ -22,7 +22,8 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = event.urlAfterRedirects;
-        this.hideSidebar = currentRoute === '/' || currentRoute === '/resetpassword';
+        // Hide sidebar on '/', '/login', and '/resetpassword' routes
+        this.hideSidebar = currentRoute === '/' || currentRoute === '/login' || currentRoute === '/resetpassword';
         this.isSidebarOpen = false; // Close sidebar on route change
       }
     });

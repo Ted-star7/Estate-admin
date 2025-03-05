@@ -1,10 +1,8 @@
 /* General Styles */
 .admin-panel {
   font-family: Arial, sans-serif;
-  background-color: #F2F2F2;
   padding: 20px;
   max-width: 1400px;
-  /* Increased container width */
   margin: 0 auto;
 }
 
@@ -16,7 +14,6 @@
 }
 
 .messages-container {
-  background-color: #F2EED8;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -32,7 +29,7 @@
 .search-input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #D98D62;
+  border: 1px solid #d98d62;
   border-radius: 4px;
   margin-bottom: 16px;
   font-size: 14px;
@@ -40,7 +37,7 @@
 
 .search-input:focus {
   outline: none;
-  border-color: #F25C05;
+  border-color: #f25c05;
   box-shadow: 0 0 0 2px rgba(242, 92, 5, 0.2);
 }
 
@@ -52,7 +49,7 @@
 
 .tab-button {
   padding: 8px 16px;
-  background-color: #F25C05;
+  background-color: #f25c05;
   color: white;
   border: none;
   border-radius: 4px;
@@ -62,10 +59,10 @@
 }
 
 .tab-button:hover {
-  background-color: #D98D62;
+  background-color: #d98d62;
 }
 
-/* Table Styles */
+/* Table Styles (Desktop) */
 .messages-table {
   width: 100%;
   border-collapse: collapse;
@@ -73,7 +70,6 @@
   border-radius: 4px;
   overflow: hidden;
   table-layout: fixed;
-  /* Ensures consistent column widths */
 }
 
 .messages-table th,
@@ -81,52 +77,49 @@
   padding: 12px;
   text-align: left;
   word-wrap: break-word;
-  /* Ensures long text wraps within cells */
 }
 
 .messages-table th {
-  background-color: #D98D62;
+  background-color: #d98d62;
   color: white;
 }
 
 .messages-table tr {
-  border-bottom: 1px solid #F2EED8;
+  border-bottom: 1px solid #f2eed8;
 }
 
 .messages-table tr:hover {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   cursor: pointer;
 }
 
-/* Column Widths */
-.messages-table th:nth-child(1),
-.messages-table td:nth-child(1) {
-  width: 5%;
-  /* # column */
+/* Card Styles (Mobile) */
+.messages-cards {
+  display: none;
+  /* Hidden by default */
 }
 
-.messages-table th:nth-child(2),
-.messages-table td:nth-child(2) {
-  width: 15%;
-  /* Name or Email column */
+.message-card {
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.messages-table th:nth-child(3),
-.messages-table td:nth-child(3) {
-  width: 20%;
-  /* Email or Client Message column */
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
-.messages-table th:nth-child(4),
-.messages-table td:nth-child(4) {
-  width: 20%;
-  /* Phone or Admin Reply column */
+.card-label {
+  font-weight: bold;
+  color: #595959;
 }
 
-.messages-table th:nth-child(5),
-.messages-table td:nth-child(5) {
-  width: 40%;
-  /* Message or Replied At column */
+.card-value {
+  color: #6b7280;
 }
 
 /* Pagination Styles */
@@ -139,7 +132,7 @@
 
 .pagination-button {
   padding: 8px 16px;
-  background-color: #F25C05;
+  background-color: #f25c05;
   color: white;
   border: none;
   border-radius: 4px;
@@ -154,7 +147,7 @@
 }
 
 .pagination-button:hover:not(:disabled) {
-  background-color: #D98D62;
+  background-color: #d98d62;
 }
 
 .pagination-info {
@@ -164,7 +157,7 @@
 
 /* Selected Message Styles */
 .selected-message {
-  background-color: #F2EED8;
+  background-color: #f2eed8;
   padding: 20px;
   border-radius: 8px;
   margin-top: 20px;
@@ -197,7 +190,7 @@
 .reply-textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #D98D62;
+  border: 1px solid #d98d62;
   border-radius: 4px;
   font-size: 14px;
   resize: vertical;
@@ -205,13 +198,13 @@
 
 .reply-textarea:focus {
   outline: none;
-  border-color: #F25C05;
+  border-color: #f25c05;
   box-shadow: 0 0 0 2px rgba(242, 92, 5, 0.2);
 }
 
 .reply-button {
   padding: 8px 16px;
-  background-color: #F25C05;
+  background-color: #f25c05;
   color: white;
   border: none;
   border-radius: 4px;
@@ -227,5 +220,31 @@
 }
 
 .reply-button:hover:not(:disabled) {
-  background-color: #D98D62;
+  background-color: #d98d62;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .messages-table {
+    display: none;
+    /* Hide table on mobile */
+  }
+
+  .messages-cards {
+    display: block;
+    /* Show cards on mobile */
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pagination-button {
+    width: 100%;
+  }
+
+  .selected-message {
+    padding: 16px;
+  }
 }
