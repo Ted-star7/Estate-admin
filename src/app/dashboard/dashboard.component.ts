@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
 
   recentSiteVisitReply: string = '';
   recentContactReply: string = '';
+  recentPropertyPosted: string = '';
 
   username: string = 'Admin';
 
@@ -89,6 +90,17 @@ export class DashboardComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching recent contact reply:', error);
+      },
+    });
+
+    this.consumeService.getRequest('/api/open/dashboard/property/recent-time/added/', null).subscribe({
+      next: (response: any) => {
+        if (response.status === 'success') {
+          this.recentPropertyPosted = response.data;
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching property posted:', error);
       },
     });
   }
