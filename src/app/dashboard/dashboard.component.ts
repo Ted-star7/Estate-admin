@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private consumeService: ConsumeService,
     private sessionService: SessionService,
-    private router: Router // ✅ Ensure router is properly injected
+    private router: Router 
   ) { }
 
   ngOnInit(): void {
