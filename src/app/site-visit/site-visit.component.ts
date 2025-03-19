@@ -90,7 +90,8 @@ export class SiteVisitComponent implements OnInit {
       return;
     }
 
-    const payload = { reply: this.message[id] };
+    // Correct payload structure
+    const payload = { message: this.message[id] };
 
     this.consumeService.postRequest(`/api/open/site-visits/${id}/reply`, payload, this.token).subscribe({
       next: () => {
@@ -100,7 +101,8 @@ export class SiteVisitComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error sending reply:', error);
-        this.showNotification('Failed to send reply. Please try again.', 'error');
+        const errorMessage = error.error?.message || 'Failed to send reply. Please try again.';
+        this.showNotification(errorMessage, 'error');
       },
     });
   }
