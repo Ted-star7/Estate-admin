@@ -9,7 +9,8 @@ import { catchError } from 'rxjs/operators';
 export class ConsumeService {
 
   // private url: string = "http://161.97.79.1:8080";
-  private url: string = "https://crown-estate-1.onrender.com";
+  private url: string = "https://crown-estate-qy98.onrender.com";
+  
 
   constructor(private httpClient: HttpClient) { }
 
